@@ -7,6 +7,8 @@ import com.alee.laf.menu.WebMenu;
 import com.alee.laf.menu.WebMenuBar;
 import com.alee.laf.rootpane.WebFrame;
 
+import meal.planner.gui.panels.MainPanel;
+
 public class GUI {
 
 	WebFrame mainFrame;
@@ -18,7 +20,9 @@ public class GUI {
 	}
 
 	public void initialize() {
-		mainFrame = new WebFrame();
+		MainPanel mainPanel = new MainPanel();
+		mainFrame = new WebFrame("MealOMatic V1.0");
+		mainFrame.setContentPane(mainPanel);
 
 		// Set to the size of the screen
 		Dimension d = Toolkit	.getDefaultToolkit()
@@ -27,6 +31,7 @@ public class GUI {
 
 		mainFrame.setDefaultCloseOperation(WebFrame.EXIT_ON_CLOSE);
 		mainFrame.setVisible(true);
+		
 
 	}
 
