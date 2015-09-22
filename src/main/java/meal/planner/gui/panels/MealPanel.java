@@ -1,5 +1,9 @@
 package meal.planner.gui.panels;
 
+import static meal.planner.GlobalConstants.ICON_MIN;
+import static meal.planner.GlobalConstants.ICON_PLUS;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -28,9 +32,10 @@ public class MealPanel
 	 */
 	private static final long serialVersionUID = 1L;
 	private JTextField txtName;
+	private JTextField textField;
 
 	public MealPanel() {
-		setLayout(new MigLayout("", "[][grow][][]", "[][grow][][grow][]"));
+		setLayout(new MigLayout("", "[][grow][][]", "[][grow][][grow][][]"));
 
 		WebLabel lblName = new WebLabel("Name:");
 		add(lblName, "cell 0 0,alignx trailing");
@@ -62,14 +67,19 @@ public class MealPanel
 		WebCollapsiblePane recipeCPane = new WebCollapsiblePane("Recipes", new JPanel());
 		add(recipeCPane, "cell 0 3 3 1,growx");
 
-		JButton btnAdd = new JButton("Add");
-		add(btnAdd, "flowx,cell 3 3");
+		JButton btnAdd = new JButton("Add", new ImageIcon(ICON_PLUS));
+		add(btnAdd, "cell 0 4");
 
-		JButton btnRemove = new JButton("Remove");
-		add(btnRemove, "cell 3 3");
+		textField = new JTextField();
+		add(textField, "cell 1 4,growx");
+		textField.setColumns(10);
+
+		JButton btnRemove = new JButton("Remove", new ImageIcon(ICON_MIN));
+		add(btnRemove, "cell 3 4");
 
 		WebCollapsiblePane shoppingPane = new WebCollapsiblePane("Shopping List", new JLabel("Lorem ipsum BLABLABLA"));
-		add(shoppingPane, "cell 0 4 3 1,growx");
+		shoppingPane.setExpanded(false);
+		add(shoppingPane, "cell 0 5 3 1,growx");
 	}
 
 	public void save() {
