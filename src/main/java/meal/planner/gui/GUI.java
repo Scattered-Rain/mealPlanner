@@ -3,6 +3,7 @@ package meal.planner.gui;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 
+import com.alee.laf.WebLookAndFeel;
 import com.alee.laf.menu.WebMenu;
 import com.alee.laf.menu.WebMenuBar;
 import com.alee.laf.rootpane.WebFrame;
@@ -20,6 +21,10 @@ public class GUI {
 	}
 
 	public void initialize() {
+		// Install the look and feel
+		WebLookAndFeel.install();
+
+		// Setup the main things
 		MainPanel mainPanel = new MainPanel();
 		mainFrame = new WebFrame("MealOMatic V1.0");
 		mainFrame.setContentPane(mainPanel);

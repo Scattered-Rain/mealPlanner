@@ -1,3 +1,5 @@
 *.project
 *.classpath
 /target/
+miglayout-src.zip
+*.jar

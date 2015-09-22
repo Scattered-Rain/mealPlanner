@@ -27,6 +27,8 @@ public class MainPanel
 	private void initialize() {
 		tabbedPane = new WebTabbedPane();
 		tabbedPane.addTab("New Meal", new MealPanel());
+
+		add(tabbedPane);
 	}
 
 }
