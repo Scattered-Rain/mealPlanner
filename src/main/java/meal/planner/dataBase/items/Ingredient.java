@@ -37,5 +37,10 @@ public class Ingredient extends Item<IngAttribute>{
 	public float getPrice(){
 		return price;
 	}
+	
+	/** Sets the price of the current Ingredient */
+	public void setPrice(float price){
+		this.price = price;
+	}
 
 }

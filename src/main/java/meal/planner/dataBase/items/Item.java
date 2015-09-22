@@ -1,6 +1,7 @@
 package meal.planner.dataBase.items;
 
-/** Abstract class that is the base for Ingrediants, Meals and Recipes */
+/** Abstract class that is the base for Ingrediants, Meals and Recipes 
+ * S here represents a Sub-Part, for example S=Ingredients for Recipies*/
 public abstract class Item<S> {
 	
 	private int id;
