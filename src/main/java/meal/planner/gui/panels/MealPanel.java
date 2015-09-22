@@ -1,8 +1,12 @@
 package meal.planner.gui.panels;
 
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import com.alee.extended.panel.WebCollapsiblePane;
 import com.alee.laf.label.WebLabel;
 import com.alee.laf.panel.WebPanel;
 import com.alee.laf.spinner.WebSpinner;
@@ -26,7 +30,7 @@ public class MealPanel
 	private JTextField txtName;
 
 	public MealPanel() {
-		setLayout(new MigLayout("", "[][grow][][]", "[][grow][][grow]"));
+		setLayout(new MigLayout("", "[][grow][][]", "[][grow][][grow][]"));
 
 		WebLabel lblName = new WebLabel("Name:");
 		add(lblName, "cell 0 0,alignx trailing");
@@ -55,9 +59,17 @@ public class MealPanel
 		WebLabel lblValprice = new WebLabel("valPrice");
 		add(lblValprice, "cell 3 2");
 
-		// TODO: Finish up content
-		// WebScrollPane scrollPane = new WebScrollPane();
-		// add(scrollPane, "cell 0 3 4 1,grow");
+		WebCollapsiblePane recipeCPane = new WebCollapsiblePane("Recipes", new JPanel());
+		add(recipeCPane, "cell 0 3 3 1,growx");
+
+		JButton btnAdd = new JButton("Add");
+		add(btnAdd, "flowx,cell 3 3");
+
+		JButton btnRemove = new JButton("Remove");
+		add(btnRemove, "cell 3 3");
+
+		WebCollapsiblePane shoppingPane = new WebCollapsiblePane("Shopping List", new JLabel("Lorem ipsum BLABLABLA"));
+		add(shoppingPane, "cell 0 4 3 1,growx");
 	}
 
 	public void save() {

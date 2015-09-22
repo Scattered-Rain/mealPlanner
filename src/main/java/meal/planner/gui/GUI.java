@@ -3,10 +3,10 @@ package meal.planner.gui;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 
+import javax.swing.JMenuBar;
+
 import com.alee.laf.WebLookAndFeel;
-import com.alee.laf.menu.MenuBarStyle;
 import com.alee.laf.menu.WebMenu;
-import com.alee.laf.menu.WebMenuBar;
 import com.alee.laf.rootpane.WebFrame;
 import com.alee.laf.toolbar.WebToolBar;
 
@@ -39,21 +39,21 @@ public class GUI {
 
 		mainFrame.setDefaultCloseOperation(WebFrame.EXIT_ON_CLOSE);
 		mainFrame.setVisible(true);
-		
 
 	}
 
 	public void setupMenu() {
 		WebToolBar toolBar = new WebToolBar();
 
-		WebMenuBar menuBar = new WebMenuBar(MenuBarStyle.attached);
+		JMenuBar menuBar = new JMenuBar();
 		// menuBar.add(toolBar);
-		mainFrame.setJMenuBar(menuBar);
 
 		WebMenu menu = new WebMenu("File");
 		menuBar.add(menu);
 
+		mainFrame.setJMenuBar(menuBar);
 		mainFrame.revalidate();
 		// TODO: populate menu
+		// TODO: Why isn't the menu showing up? What did I forget?
 	}
 }

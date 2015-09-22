@@ -1,6 +1,7 @@
 package meal.planner.gui.panels;
 
 import com.alee.laf.panel.WebPanel;
+import com.alee.laf.scroll.WebScrollPane;
 import com.alee.laf.tabbedpane.WebTabbedPane;
 
 /**
@@ -26,7 +27,7 @@ public class MainPanel
 
 	private void initialize() {
 		tabbedPane = new WebTabbedPane();
-		tabbedPane.addTab("New Meal", new MealPanel());
+		tabbedPane.addTab("New Meal", new WebScrollPane(new MealPanel()));
 
 		add(tabbedPane);
 	}
