@@ -3,6 +3,7 @@ package meal.planner.dataBase;
 public enum IngAttribute {
 	MEAT(),
 	PORK(MEAT),
+	BEEF(MEAT),
 	CHICKEN(MEAT),
 	PEANUT();
 	
