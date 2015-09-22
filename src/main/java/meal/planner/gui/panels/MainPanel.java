@@ -23,6 +23,7 @@ public class MainPanel
 	public MainPanel() {
 		super();
 		initialize();
+
 	}
 
 	private void initialize() {

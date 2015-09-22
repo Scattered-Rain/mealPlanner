@@ -1,12 +1,19 @@
 package meal.planner.gui;
 
+import static meal.planner.GlobalConstants.ICON_EXPORT_PDF;
+import static meal.planner.GlobalConstants.ICON_NEW;
+import static meal.planner.GlobalConstants.ICON_OPEN;
+import static meal.planner.GlobalConstants.ICON_SAVE;
+import static meal.planner.GlobalConstants.ICON_SAVE_ALL;
+
 import java.awt.Dimension;
 import java.awt.Toolkit;
 
+import javax.swing.ImageIcon;
 import javax.swing.JMenuBar;
 
 import com.alee.laf.WebLookAndFeel;
-import com.alee.laf.menu.WebMenu;
+import com.alee.laf.button.WebButton;
 import com.alee.laf.rootpane.WebFrame;
 import com.alee.laf.toolbar.WebToolBar;
 
@@ -22,7 +29,7 @@ public class GUI {
 
 	}
 
-	public void initialize() {
+	private void initialize() {
 		// Install the look and feel
 		WebLookAndFeel.install();
 
@@ -36,20 +43,39 @@ public class GUI {
 								.getScreenSize();
 		mainFrame.setSize(d);
 		// TODO: Set the proper size (dealing with toolbars etc.)
-
+		setupMenu();
 		mainFrame.setDefaultCloseOperation(WebFrame.EXIT_ON_CLOSE);
 		mainFrame.setVisible(true);
 
 	}
 
-	public void setupMenu() {
-		WebToolBar toolBar = new WebToolBar();
+	private void setupMenu() {
+
+		// Setup the toolbar
+		WebToolBar fileToolBar = new WebToolBar();
+		fileToolBar.setFloatable(false);
+
+		// Initialize and setup components
+
+		//@formatter:off
+		WebButton openButton = new WebButton(new ImageIcon(ICON_OPEN)),
+				newButton = new WebButton(new ImageIcon(ICON_NEW)),
+				saveButton = new WebButton(new ImageIcon(ICON_SAVE)),
+				saveAllButton = new WebButton(new ImageIcon(ICON_SAVE_ALL)),
+				exportPDFButton = new WebButton(new ImageIcon(ICON_EXPORT_PDF));
+		//@formatter:on
+
+		// TODO: Button listeners
+
+		// Add Components to the toolbar(s)
+		fileToolBar.add(newButton);
+		fileToolBar.add(openButton);
+		fileToolBar.add(saveButton);
+		fileToolBar.add(saveAllButton);
+		fileToolBar.add(exportPDFButton);
 
 		JMenuBar menuBar = new JMenuBar();
-		// menuBar.add(toolBar);
-
-		WebMenu menu = new WebMenu("File");
-		menuBar.add(menu);
+		menuBar.add(fileToolBar);
 
 		mainFrame.setJMenuBar(menuBar);
 		mainFrame.revalidate();
