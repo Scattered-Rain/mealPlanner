@@ -4,9 +4,11 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 
 import com.alee.laf.WebLookAndFeel;
+import com.alee.laf.menu.MenuBarStyle;
 import com.alee.laf.menu.WebMenu;
 import com.alee.laf.menu.WebMenuBar;
 import com.alee.laf.rootpane.WebFrame;
+import com.alee.laf.toolbar.WebToolBar;
 
 import meal.planner.gui.panels.MainPanel;
 
@@ -33,6 +35,7 @@ public class GUI {
 		Dimension d = Toolkit	.getDefaultToolkit()
 								.getScreenSize();
 		mainFrame.setSize(d);
+		// TODO: Set the proper size (dealing with toolbars etc.)
 
 		mainFrame.setDefaultCloseOperation(WebFrame.EXIT_ON_CLOSE);
 		mainFrame.setVisible(true);
@@ -41,12 +44,16 @@ public class GUI {
 	}
 
 	public void setupMenu() {
-		WebMenuBar menuBar = new WebMenuBar();
+		WebToolBar toolBar = new WebToolBar();
+
+		WebMenuBar menuBar = new WebMenuBar(MenuBarStyle.attached);
+		// menuBar.add(toolBar);
 		mainFrame.setJMenuBar(menuBar);
 
 		WebMenu menu = new WebMenu("File");
 		menuBar.add(menu);
 
+		mainFrame.revalidate();
 		// TODO: populate menu
 	}
 }
