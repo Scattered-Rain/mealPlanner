@@ -3,7 +3,7 @@ package meal.planner.dataBase;
 public enum IngAttribute {
 	MEAT(),
 	PORK(MEAT),
-	
+	CHICKEN(MEAT),
 	PEANUT();
 	
 	private IngAttribute parent;
