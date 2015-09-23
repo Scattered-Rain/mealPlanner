@@ -15,6 +15,7 @@ import com.alee.laf.label.WebLabel;
 import com.alee.laf.panel.WebPanel;
 import com.alee.laf.spinner.WebSpinner;
 
+import meal.planner.dataBase.items.Meal;
 import net.miginfocom.swing.MigLayout;
 
 /**
@@ -33,6 +34,7 @@ public class MealPanel
 	private static final long serialVersionUID = 1L;
 	private JTextField txtName;
 	private JTextField textField;
+	private int id;
 
 	public MealPanel() {
 		setLayout(new MigLayout("", "[][grow][][]", "[][grow][][grow][][]"));
@@ -82,9 +84,22 @@ public class MealPanel
 		add(shoppingPane, "cell 0 5 3 1,growx");
 	}
 
+	public MealPanel(Meal m) {
+		this();
+		load(m);
+	}
+
+	@Override
 	public void save() {
-		// TODO Auto-generated method stub
+		// TODO Implementation
 		throw new UnsupportedOperationException();
 	}
-	// TODO: Implementation
+
+	public void load(Meal m) {
+		txtName.setText(m.getName());
+		textField.setText(m.getDescription());
+		id = m.getId();
+
+		// TODO:Load recipes
+	}
 }

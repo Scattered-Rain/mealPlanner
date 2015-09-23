@@ -4,6 +4,8 @@ import com.alee.laf.panel.WebPanel;
 import com.alee.laf.scroll.WebScrollPane;
 import com.alee.laf.tabbedpane.WebTabbedPane;
 
+import meal.planner.dataBase.items.Meal;
+
 /**
  * The main panel designed to hold all sub panels (in tabs)
  * TODO: Elaborate comments
@@ -39,9 +41,14 @@ public class MainPanel
 	 * @param select
 	 *            Whether the new tab should be selected or not.
 	 */
-	public void addTab(boolean select) {
-		tabbedPane.add("New Meal", new MealPanel());
+	public void addTab(Meal meal, boolean select) {
 
+		if (meal == null)
+			tabbedPane.add("New Meal", new MealPanel());
+		else {
+			// TODO: Check if name is not empty and/or null
+			tabbedPane.add(meal.getName(), new MealPanel());
+		}
 		// Add extra functionality
 		tabbedPane.getTabComponentAt(tabbedPane.getTabCount() - 1);
 

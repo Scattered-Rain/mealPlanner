@@ -2,6 +2,7 @@ package meal.planner;
 
 import static meal.planner.GlobalConstants.DIR_DB;
 import static meal.planner.GlobalConstants.FILE_DB;
+import static meal.planner.GlobalConstants.SERIALIZER;
 
 import java.io.File;
 import java.io.FileReader;
@@ -20,7 +21,7 @@ public class Main {
 		DataBase db;
 		if (database.exists()) {
 			try {
-				db = GlobalConstants.SERIALIZER.fromJson(new FileReader(database), DataBase.class);
+				db = SERIALIZER.fromJson(new FileReader(database), DataBase.class);
 			} catch (Exception e) {
 				Date date = new Date();
 

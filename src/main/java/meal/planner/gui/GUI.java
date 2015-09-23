@@ -9,6 +9,7 @@ import static meal.planner.GlobalConstants.ICON_SAVE_ALL;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.File;
+import java.io.FileReader;
 
 import javax.swing.ImageIcon;
 import javax.swing.JMenuBar;
@@ -16,10 +17,13 @@ import javax.swing.JMenuBar;
 import com.alee.laf.WebLookAndFeel;
 import com.alee.laf.button.WebButton;
 import com.alee.laf.filechooser.WebFileChooser;
+import com.alee.laf.optionpane.WebOptionPane;
 import com.alee.laf.rootpane.WebFrame;
 import com.alee.laf.toolbar.WebToolBar;
 
+import meal.planner.GlobalConstants;
 import meal.planner.dataBase.DataBase;
+import meal.planner.dataBase.items.Meal;
 import meal.planner.gui.panels.MainPanel;
 
 public class GUI {
@@ -71,7 +75,7 @@ public class GUI {
 		//@formatter:on
 
 		// TODO: Button listeners
-		newButton.addActionListener(e -> mainPanel.addTab(true));
+		newButton.addActionListener(e -> mainPanel.addTab(null, true));
 
 		openButton.addActionListener(e -> {
 			// TODO: Possible filter on what can be opened
@@ -81,6 +85,17 @@ public class GUI {
 				if (f	.getName()
 						.endsWith(".meal")) {
 					// Opening a meal
+					try {
+						Meal meal = GlobalConstants.SERIALIZER.fromJson(new FileReader(f), Meal.class);
+						mainPanel.addTab(meal, true);
+					} catch (Exception e1) {
+						WebOptionPane.showMessageDialog(mainFrame,
+														"Unable to load meal, data appears corrupt",
+														"Error Loading File",
+														WebOptionPane.ERROR_MESSAGE);
+						e1.printStackTrace();
+					}
+
 					// TODO: Open a tab with the correct meal values
 				}
 				// TODO: Perhaps else do something with a recipe?
