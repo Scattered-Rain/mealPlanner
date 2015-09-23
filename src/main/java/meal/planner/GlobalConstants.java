@@ -1,12 +1,19 @@
 package meal.planner;
 
+import com.google.gson.Gson;
+
 /** A class containing all constants used throughout the game */
 public class GlobalConstants {
-
-	/** Directory paths */
-	public static final String DIR_ICONS = "src/main/resources/assets/icons/";
-	/** Icon Assets */
 	// @formatter:off
+	
+	/** Directory paths */
+	public static final String 
+		DIR_ICONS = "src/main/resources/assets/icons/", 
+		DIR_DB = System.getenv("APPDATA");
+	
+	public static final String
+		FILE_DB = DIR_DB + "mealPlanner/db.json";
+	/** Icon Assets */
 	public static final String 
 		ICON_EXPORT_PDF = DIR_ICONS + "document-pdf-text.png",
 		ICON_OPEN = DIR_ICONS + "folder-open.png",
@@ -16,7 +23,9 @@ public class GlobalConstants {
 		ICON_RECIPE = DIR_ICONS + "hamburger.png",
 		ICON_SAVE = DIR_ICONS + "disk.png",
 		ICON_SAVE_ALL =DIR_ICONS + "disks.png";
-			
-	//@formatter:on
 	
+	//@formatter:on
+
+	/** Global serializer instance used throughout the program */
+	public static Gson SERIALIZER = new Gson();
 }

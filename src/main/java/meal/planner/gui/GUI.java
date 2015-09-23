@@ -19,6 +19,7 @@ import com.alee.laf.filechooser.WebFileChooser;
 import com.alee.laf.rootpane.WebFrame;
 import com.alee.laf.toolbar.WebToolBar;
 
+import meal.planner.dataBase.DataBase;
 import meal.planner.gui.panels.MainPanel;
 
 public class GUI {
@@ -27,7 +28,7 @@ public class GUI {
 	final MainPanel mainPanel = new MainPanel();
 
 	/** Instantiates the GUI */
-	public GUI() {
+	public GUI(DataBase db) {
 		initialize();
 
 	}

@@ -42,11 +42,14 @@ public class MainPanel
 	public void addTab(boolean select) {
 		tabbedPane.add("New Meal", new MealPanel());
 
+		// Add extra functionality
+		tabbedPane.getTabComponentAt(tabbedPane.getTabCount() - 1);
+
 		if (select)
 			tabbedPane.setSelectedIndex(tabbedPane.getTabCount() - 1);
 
 	}
-	
+
 	public void save(boolean all) {
 		throw new UnsupportedOperationException();
 		// TODO: Implement this
