@@ -6,18 +6,17 @@ import meal.planner.dataBase.IngAttribute;
 
 public class Ingredient extends Item<IngAttribute>{
 	
+	/** The price of this ingredient */
 	private float price;
-	private ArrayList<IngAttribute> attrs;
 	
 	public Ingredient(int id){
 		super(id);
 		this.price = 0;
-		this.attrs = new ArrayList<IngAttribute>();
 	}
 	
 	/** Returns whether the Ingredient contains the given IngAttribute */
 	public boolean contains(IngAttribute att){
-		for(IngAttribute a : attrs){
+		for(IngAttribute a : subItems){
 			if(a==att){
 				return true;
 			}
