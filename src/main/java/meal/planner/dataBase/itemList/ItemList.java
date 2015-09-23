@@ -8,9 +8,7 @@ import meal.planner.dataBase.items.Item;
 public class ItemList<T extends Item, S> {
 	
 	/** Highest Id currently in use */
-	private int highestId;
-	/** A List storing all the Ids that aren't in use anymore */
-	private ArrayList<Integer> unusedIds;
+	private long highestAvailableId;
 	/** The actual List Of Items */
 	private ArrayList<T> items;
 	
@@ -22,14 +20,8 @@ public class ItemList<T extends Item, S> {
 	/** Adds A new Item to the list */
 	public void add(T item){
 		items.add(item);
-		if(unusedIds.size()>0){
-			item.setId(unusedIds.get(0));
-			unusedIds.remove(0);
-		}
-		else{
-			item.setId(highestId+1);
-			this.highestId++;
-		}
+		item.setId(highestAvailableId);
+		this.highestAvailableId++;
 	}
 	
 	/** Removes item within this list of the given id */
