@@ -10,15 +10,19 @@ import java.util.Date;
 
 import com.alee.laf.optionpane.WebOptionPane;
 
+import lombok.Getter;
 import meal.planner.dataBase.DataBase;
 import meal.planner.gui.GUI;
 
 public class Main {
+	@Getter
+	private static DataBase db;
+
 	public static void main(String[] args) {
 
 		// Load the database
 		File database = new File(FILE_DB);
-		DataBase db;
+
 		if (database.exists()) {
 			try {
 				db = SERIALIZER.fromJson(new FileReader(database), DataBase.class);
@@ -32,7 +36,7 @@ public class Main {
 				System.err.println("Unable to load database, database appears to be corrupt. Creating a new empty database instead.");
 
 				if (succesfullCopy)
-				WebOptionPane.showMessageDialog(null,
+					WebOptionPane.showMessageDialog(null,
 													String.format(	"Could not load database. Format appears to be corrupted.\n Created a backupfile of database at: %s",
 																	copy.getAbsolutePath()),
 													"Database Corruption Detected!",

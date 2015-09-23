@@ -64,6 +64,9 @@ public class GUI {
 		WebToolBar fileToolBar = new WebToolBar();
 		fileToolBar.setFloatable(false);
 
+		WebToolBar recipeToolbar = new WebToolBar();
+		recipeToolbar.setFloatable(false);
+
 		// Initialize and setup components
 
 		//@formatter:off
@@ -96,7 +99,6 @@ public class GUI {
 						e1.printStackTrace();
 					}
 
-					// TODO: Open a tab with the correct meal values
 				}
 				// TODO: Perhaps else do something with a recipe?
 			}
@@ -105,6 +107,7 @@ public class GUI {
 		saveButton.addActionListener(e -> mainPanel.save(false));
 		saveAllButton.addActionListener(e -> mainPanel.save(true));
 		exportPDFButton.addActionListener(e -> mainPanel.exportPDF());
+
 
 		// Add Components to the toolbar(s)
 		fileToolBar.add(newButton);
