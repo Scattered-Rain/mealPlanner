@@ -76,7 +76,7 @@ public class GUI {
 			// TODO: Possible filter on what can be opened
 			File f = WebFileChooser.showOpenDialog();
 
-			if (f.isFile()) {
+			if (f != null && f.isFile()) {
 				if (f	.getName()
 						.endsWith(".meal")) {
 					// Opening a meal
@@ -85,6 +85,10 @@ public class GUI {
 				// TODO: Perhaps else do something with a recipe?
 			}
 		});
+
+		saveButton.addActionListener(e -> mainPanel.save(false));
+		saveAllButton.addActionListener(e -> mainPanel.save(true));
+		exportPDFButton.addActionListener(e -> mainPanel.exportPDF());
 
 		// Add Components to the toolbar(s)
 		fileToolBar.add(newButton);

@@ -46,5 +46,15 @@ public class MainPanel
 			tabbedPane.setSelectedIndex(tabbedPane.getTabCount() - 1);
 
 	}
+	
+	public void save(boolean all) {
+		throw new UnsupportedOperationException();
+		// TODO: Implement this
+	}
+
+	public void exportPDF() {
+		throw new UnsupportedOperationException();
+		// TODO: Implement this
+	}
 
 }
