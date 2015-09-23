@@ -8,12 +8,14 @@ import static meal.planner.GlobalConstants.ICON_SAVE_ALL;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.io.File;
 
 import javax.swing.ImageIcon;
 import javax.swing.JMenuBar;
 
 import com.alee.laf.WebLookAndFeel;
 import com.alee.laf.button.WebButton;
+import com.alee.laf.filechooser.WebFileChooser;
 import com.alee.laf.rootpane.WebFrame;
 import com.alee.laf.toolbar.WebToolBar;
 
@@ -22,6 +24,7 @@ import meal.planner.gui.panels.MainPanel;
 public class GUI {
 
 	WebFrame mainFrame;
+	final MainPanel mainPanel = new MainPanel();
 
 	/** Instantiates the GUI */
 	public GUI() {
@@ -34,14 +37,15 @@ public class GUI {
 		WebLookAndFeel.install();
 
 		// Setup the main things
-		MainPanel mainPanel = new MainPanel();
 		mainFrame = new WebFrame("MealOMatic V1.0");
 		mainFrame.setContentPane(mainPanel);
 
 		// Set to the size of the screen
 		Dimension d = Toolkit	.getDefaultToolkit()
 								.getScreenSize();
-		mainFrame.setSize(d);
+
+		// TODO: Set back to fullscreen after finishing rest
+		mainFrame.setSize(d.width / 2, d.height / 2);
 		// TODO: Set the proper size (dealing with toolbars etc.)
 		setupMenu();
 		mainFrame.setDefaultCloseOperation(WebFrame.EXIT_ON_CLOSE);
@@ -66,6 +70,21 @@ public class GUI {
 		//@formatter:on
 
 		// TODO: Button listeners
+		newButton.addActionListener(e -> mainPanel.addTab(true));
+
+		openButton.addActionListener(e -> {
+			// TODO: Possible filter on what can be opened
+			File f = WebFileChooser.showOpenDialog();
+
+			if (f.isFile()) {
+				if (f	.getName()
+						.endsWith(".meal")) {
+					// Opening a meal
+					// TODO: Open a tab with the correct meal values
+				}
+				// TODO: Perhaps else do something with a recipe?
+			}
+		});
 
 		// Add Components to the toolbar(s)
 		fileToolBar.add(newButton);

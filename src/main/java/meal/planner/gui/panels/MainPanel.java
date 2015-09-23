@@ -33,4 +33,18 @@ public class MainPanel
 		add(tabbedPane);
 	}
 
+	/**
+	 * Adds a new Meal tab to the mainpanel.
+	 * 
+	 * @param select
+	 *            Whether the new tab should be selected or not.
+	 */
+	public void addTab(boolean select) {
+		tabbedPane.add("New Meal", new MealPanel());
+
+		if (select)
+			tabbedPane.setSelectedIndex(tabbedPane.getTabCount() - 1);
+
+	}
+
 }
