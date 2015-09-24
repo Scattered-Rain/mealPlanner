@@ -2,6 +2,7 @@ package meal.planner.gui;
 
 import static meal.planner.GlobalConstants.ICON_EXPORT_PDF;
 import static meal.planner.GlobalConstants.ICON_NEW;
+import static meal.planner.GlobalConstants.ICON_NEW_RECIPE;
 import static meal.planner.GlobalConstants.ICON_OPEN;
 import static meal.planner.GlobalConstants.ICON_SAVE;
 import static meal.planner.GlobalConstants.ICON_SAVE_ALL;
@@ -72,10 +73,16 @@ public class GUI {
 		//@formatter:off
 		WebButton openButton = new WebButton(new ImageIcon(ICON_OPEN)),
 				newButton = new WebButton(new ImageIcon(ICON_NEW)),
+				newRecButton = new WebButton(new ImageIcon(ICON_NEW_RECIPE)),
 				saveButton = new WebButton(new ImageIcon(ICON_SAVE)),
 				saveAllButton = new WebButton(new ImageIcon(ICON_SAVE_ALL)),
 				exportPDFButton = new WebButton(new ImageIcon(ICON_EXPORT_PDF));
 		//@formatter:on
+
+		newRecButton.setToolTipText("Add Recipe...");
+		openButton.setToolTipText("Open Meal...");
+		saveButton.setToolTipText("Save As...");
+		exportPDFButton.setToolTipText("Export As PDF...");
 
 		// TODO: Button listeners
 		newButton.addActionListener(e -> mainPanel.addTab(null, true));
@@ -109,6 +116,7 @@ public class GUI {
 		exportPDFButton.addActionListener(e -> mainPanel.exportPDF());
 
 
+
 		// Add Components to the toolbar(s)
 		fileToolBar.add(newButton);
 		fileToolBar.add(openButton);
@@ -116,8 +124,11 @@ public class GUI {
 		fileToolBar.add(saveAllButton);
 		fileToolBar.add(exportPDFButton);
 
+		recipeToolbar.add(newRecButton);
+
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.add(fileToolBar);
+		menuBar.add(recipeToolbar);
 
 		mainFrame.setJMenuBar(menuBar);
 		mainFrame.revalidate();

@@ -1,13 +1,17 @@
 package meal.planner.gui.panels;
 
+import static lombok.AccessLevel.PRIVATE;
 import static meal.planner.GlobalConstants.ICON_MIN;
 import static meal.planner.GlobalConstants.ICON_PLUS;
+
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
 import com.alee.extended.panel.WebCollapsiblePane;
 import com.alee.laf.label.WebLabel;
@@ -15,7 +19,9 @@ import com.alee.laf.panel.WebPanel;
 import com.alee.laf.spinner.WebSpinner;
 import com.alee.laf.table.WebTable;
 
+import lombok.experimental.FieldDefaults;
 import meal.planner.Main;
+import meal.planner.dataBase.DataBase;
 import meal.planner.dataBase.items.Meal;
 import meal.planner.dataBase.items.Recipe;
 import net.miginfocom.swing.MigLayout;
@@ -27,18 +33,23 @@ import net.miginfocom.swing.MigLayout;
  * @author pieter
  *
  */
+@FieldDefaults(level = PRIVATE)
 public class MealPanel
 		extends WebPanel
 		implements SerializablePanel {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
-	private JTextField txtName;
-	private JTextField recipeAddField;
-	private int id;
+	static final long serialVersionUID = 1L;
+	JTextField txtName;
+	JTextField recipeAddField;
+	long id;
+	WebTable recipeTable;
+
+	ArrayList<Recipe> recipes;
 
 	public MealPanel() {
+		recipes = new ArrayList<>();
 		setLayout(new MigLayout("", "[][grow][][]", "[][grow][][grow][][]"));
 
 		WebLabel lblName = new WebLabel("Name:");
@@ -68,7 +79,7 @@ public class MealPanel
 		WebLabel lblValprice = new WebLabel("valPrice");
 		add(lblValprice, "cell 3 2");
 
-		WebTable recipeTable = new WebTable(new String[0][0], new String[] { "ID", "Name" });
+		recipeTable = new WebTable(new String[0][0], new String[] { "ID", "Name" });
 		recipeTable.setEditable(false);
 		recipeTable.setColumnSelectionAllowed(false);
 		recipeTable.setRowSelectionAllowed(true);
@@ -96,13 +107,18 @@ public class MealPanel
 
 			// If numeric value only
 			Recipe recipe;
+			DataBase db = Main.getDb();
 			if (text.matches("^-?\\d+$")) {
 				// Do a lookup by ID
-				// TODO: Retrieve recipe from
-				Main.getDb();
+				recipe = db.getRecipe(Integer.parseInt(text));
 
 			} else {
-				// TODO: Lookup by name
+				// TODO: Retrieve recipe by name
+				recipe = null;
+			}
+
+			if (recipe != null) {
+				addRecipe(recipe);
 			}
 		});
 
@@ -124,6 +140,16 @@ public class MealPanel
 		recipeAddField.setText(m.getDescription());
 		id = m.getId();
 
-		// TODO:Load recipes
+		// TODO: Load in recipes
+	}
+
+	private void addRecipe(Recipe recipe) {
+
+		assert recipe != null : "Recipe was null";
+
+		recipes.add(recipe);
+		DefaultTableModel tModel = (DefaultTableModel) recipeTable.getModel();
+		tModel.addRow(new Object[] { recipe.getId(), recipe.getName() });
+
 	}
 }

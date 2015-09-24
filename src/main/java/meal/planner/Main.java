@@ -1,5 +1,6 @@
 package meal.planner;
 
+import static lombok.AccessLevel.PRIVATE;
 import static meal.planner.GlobalConstants.DIR_DB;
 import static meal.planner.GlobalConstants.FILE_DB;
 import static meal.planner.GlobalConstants.SERIALIZER;
@@ -10,13 +11,17 @@ import java.util.Date;
 
 import com.alee.laf.optionpane.WebOptionPane;
 
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import meal.planner.dataBase.DataBase;
 import meal.planner.gui.GUI;
 
+@NoArgsConstructor(access = PRIVATE)
 public class Main {
 	@Getter
 	private static DataBase db;
+
 
 	public static void main(String[] args) {
 
