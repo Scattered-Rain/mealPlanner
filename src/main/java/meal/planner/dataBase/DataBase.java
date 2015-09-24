@@ -37,7 +37,7 @@ public class DataBase {
 	}
 	
 	/** Returns the Meal with the specified Id */
-	public Meal getMeal(int id){
+	public Meal getMeal(long id) {
 		return meals.findId(id);
 	}
 	

@@ -16,7 +16,7 @@ public abstract class Item<S> {
 	protected ArrayList<S> subItems;
 	
 	/** Construct new Item */
-	public Item(int id){
+	public Item(long id) {
 		this.id = id;
 		this.name = "";
 		this.description = "";
