@@ -43,7 +43,7 @@ public class MealPanel
 	static final long serialVersionUID = 1L;
 	JTextField txtName;
 	JTextField recipeAddField;
-	long id;
+	long id = -1;
 	WebTable recipeTable;
 
 	ArrayList<Recipe> recipes;
@@ -131,8 +131,13 @@ public class MealPanel
 
 	@Override
 	public void save() {
-		// TODO Implementation
-		throw new UnsupportedOperationException();
+		DataBase db = Main.getDb();
+		Meal meal = db.getMeal(id);
+		if (meal == null) {
+			// TODO: Implement saving to database
+			// meal = db.
+		}
+
 	}
 
 	public void load(Meal m) {

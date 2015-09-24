@@ -1,7 +1,5 @@
 package meal.planner.dataBase;
 
-import java.util.ArrayList;
-
 import meal.planner.dataBase.itemList.ItemList;
 import meal.planner.dataBase.items.Ingredient;
 import meal.planner.dataBase.items.Meal;
@@ -37,7 +35,7 @@ public class DataBase {
 	}
 	
 	/** Returns the Meal with the specified Id */
-	public Meal getMeal(int id){
+	public Meal getMeal(long id) {
 		return meals.findId(id);
 	}
 	

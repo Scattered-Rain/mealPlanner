@@ -26,6 +26,7 @@ import meal.planner.GlobalConstants;
 import meal.planner.dataBase.DataBase;
 import meal.planner.dataBase.items.Meal;
 import meal.planner.gui.panels.MainPanel;
+import meal.planner.gui.panels.RecipePanel;
 
 public class GUI {
 
@@ -91,6 +92,7 @@ public class GUI {
 			// TODO: Possible filter on what can be opened
 			File f = WebFileChooser.showOpenDialog();
 
+
 			if (f != null && f.isFile()) {
 				if (f	.getName()
 						.endsWith(".meal")) {
@@ -109,6 +111,12 @@ public class GUI {
 				}
 				// TODO: Perhaps else do something with a recipe?
 			}
+		});
+
+		newRecButton.addActionListener(e -> {
+
+			RecipePanel rPanel = new RecipePanel();
+			int result = WebOptionPane.showConfirmDialog(mainFrame, rPanel, "Title", WebOptionPane.OK_CANCEL_OPTION);
 		});
 
 		saveButton.addActionListener(e -> mainPanel.save(false));
