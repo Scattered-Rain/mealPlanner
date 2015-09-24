@@ -56,5 +56,22 @@ public class DataBase {
 		return meals.findAll(name, minPrice, maxPrice, parts);
 	}
 	
+	public Ingredient newIngredient(){
+		Ingredient i = new Ingredient(-1);
+		ings.add(i);
+		return i;
+	}
+	
+	public Recipe newRecipe(){
+		Recipe i = new Recipe(-1);
+		recs.add(i);
+		return i;
+	}
+	
+	public Meal newMeal(){
+		Meal i = new Meal(-1);
+		meals.add(i);
+		return i;
+	}
 	
 }
