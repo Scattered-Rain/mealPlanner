@@ -41,6 +41,20 @@ public class DataBase {
 		return meals.findId(id);
 	}
 	
+	/** Finds All items that meet all the given requirements, given null or -1 will be evaluated to not matter for the search */
+	public ArrayList<Ingredient> findIngredients(String name, float minPrice, float maxPrice, IngAttribute ... parts){
+		return ings.findAll(name, minPrice, maxPrice, parts);
+	}
+	
+	/** Finds All items that meet all the given requirements, given null or -1 will be evaluated to not matter for the search */
+	public ArrayList<Recipe> findRecipes(String name, float minPrice, float maxPrice, Ingredient ... parts){
+		return recs.findAll(name, minPrice, maxPrice, parts);
+	}
+	
+	/** Finds All items that meet all the given requirements, given null or -1 will be evaluated to not matter for the search */
+	public ArrayList<Meal> findMeals(String name, float minPrice, float maxPrice, Recipe ... parts){
+		return meals.findAll(name, minPrice, maxPrice, parts);
+	}
 	
 	
 }
