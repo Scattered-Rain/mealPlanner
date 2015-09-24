@@ -1,5 +1,7 @@
 package meal.planner.dataBase;
 
+import java.util.ArrayList;
+
 import meal.planner.dataBase.itemList.ItemList;
 import meal.planner.dataBase.items.Ingredient;
 import meal.planner.dataBase.items.Meal;
