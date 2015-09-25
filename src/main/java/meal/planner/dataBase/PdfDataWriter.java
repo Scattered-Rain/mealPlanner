@@ -17,27 +17,27 @@ import meal.planner.dataBase.items.Recipe;
 
 public class PdfDataWriter {
 	
-	public static void main(String[] args){
-		Meal m = new Meal(0);
-		m.setName("Something");
-		m.setDescription("Else");
-		for(int c=0; c<5; c++){
-			Recipe r = new Recipe(1);
-			r.setName("234234");
-			r.setDescription("sdfshdfhsgs");
-			for(int c2=0; c2<4; c2++){
-				Ingredient i = new Ingredient(2);
-				i.setName("poop");
-				i.setDescription("sdgsddgs");
-				i.setPrice(5);
-				r.addIngredient(i, 2);
-			}
-			m.addSub(r);
-		}
-		try{
-			writePdf(m, new File("C:/Users/Flo/Desktop/fdfd.pdf"), 4);
-		}catch(Exception ex){}
-	}
+//	public static void main(String[] args){
+//		Meal m = new Meal(0);
+//		m.setName("Something");
+//		m.setDescription("Else");
+//		for(int c=0; c<5; c++){
+//			Recipe r = new Recipe(1);
+//			r.setName("234234");
+//			r.setDescription("sdfshdfhsgs");
+//			for(int c2=0; c2<4; c2++){
+//				Ingredient i = new Ingredient(2);
+//				i.setName("poop");
+//				i.setDescription("sdgsddgs");
+//				i.setPrice(5);
+//				r.addIngredient(i, 2);
+//			}
+//			m.addSub(r);
+//		}
+//		try{
+//			writePdf(m, new File("C:/Users/Flo/Desktop/fdfd.pdf"), 4);
+//		}catch(Exception ex){}
+//	}
 	
 	/** Creates a PDF of the given Meal */
 	public static void writePdf(Meal meal, File file, int attendees) throws DocumentException, IOException{
