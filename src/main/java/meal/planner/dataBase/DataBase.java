@@ -96,4 +96,13 @@ public class DataBase {
 		return meals.getAllSortedByName();
 	}
 	
+	public void makePdf(Meal meal, String file){
+		try{
+			PdfDataWriter.writePdf(meal, file);
+		}catch(Exception ex){
+			System.out.println("Couldn't wrte file");
+		}
+		
+	}
+	
 }

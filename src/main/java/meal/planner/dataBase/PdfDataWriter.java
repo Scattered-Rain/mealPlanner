@@ -39,7 +39,6 @@ public class PdfDataWriter {
 				ing += subs.get(subs.size()-1);
 				document.add(new Paragraph("Ingredients: "+ing));
 			}
-			
 		}
 		document.close();
 	}
