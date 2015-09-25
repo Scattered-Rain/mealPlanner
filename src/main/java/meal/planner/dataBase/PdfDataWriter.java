@@ -1,5 +1,6 @@
 package meal.planner.dataBase;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ import meal.planner.dataBase.items.Recipe;
 public class PdfDataWriter {
 	
 	/** Creates a PDF of the given Meal */
-	public static void writePdf(Meal meal, String file) throws DocumentException, IOException{
+	public static void writePdf(Meal meal, File file) throws DocumentException, IOException{
 		Document document = new Document();
 		PdfWriter.getInstance(document, new FileOutputStream(file));
 		document.open();
