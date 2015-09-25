@@ -17,8 +17,6 @@ public class DataBase {
 	/** An Item List containing all Meals */
 	private ItemList<Meal, Recipe> meals;
 	
-	//TODO: Add a constructor that can create the entire DataBase based upon an external file
-	
 	/** Constructs new and empty Data Base */
 	public DataBase(){
 		this.ings = new ItemList<Ingredient, IngAttribute>();
@@ -72,6 +70,30 @@ public class DataBase {
 		Meal i = new Meal(-1);
 		meals.add(i);
 		return i;
+	}
+	
+	public ArrayList<Ingredient> getAllIngs(){
+		return ings.getAll();
+	}
+	
+	public ArrayList<Recipe> getAllRecs(){
+		return recs.getAll();
+	}
+	
+	public ArrayList<Meal> getAllMeals(){
+		return meals.getAll();
+	}
+	
+	public ArrayList<Ingredient> getAllIngsSortedByName(){
+		return ings.getAllSortedByName();
+	}
+	
+	public ArrayList<Recipe> getAllRecsSortedByName(){
+		return recs.getAllSortedByName();
+	}
+	
+	public ArrayList<Meal> getAllMealsSortedByName(){
+		return meals.getAllSortedByName();
 	}
 	
 }
