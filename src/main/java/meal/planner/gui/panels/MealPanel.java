@@ -49,7 +49,7 @@ public class MealPanel
 	ArrayList<Recipe> recipes;
 	private JTextArea txtDescription;
 
-	public MealPanel() {
+	private MealPanel() {
 		recipes = new ArrayList<>();
 		setLayout(new MigLayout("", "[][grow][][]", "[][grow][][grow][][]"));
 
@@ -72,6 +72,11 @@ public class MealPanel
 
 		WebSpinner spinner = new WebSpinner();
 		add(spinner, "cell 1 2");
+
+		spinner.addChangeListener(e -> {
+			// Update the price
+			// TODO: Calculate price
+		});
 
 		WebLabel lblPrice = new WebLabel("Price");
 		add(lblPrice, "cell 2 2");
@@ -171,6 +176,7 @@ public class MealPanel
 		if (meal == null) {
 			// TODO: Implement saving to database
 			meal = db.newMeal();
+			id = meal.getId();
 
 			meal.setDescription(txtDescription.getText());
 			meal.setName(txtName.getText());

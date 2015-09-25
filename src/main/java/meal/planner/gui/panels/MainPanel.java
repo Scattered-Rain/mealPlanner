@@ -6,6 +6,7 @@ import com.alee.laf.panel.WebPanel;
 import com.alee.laf.scroll.WebScrollPane;
 import com.alee.laf.tabbedpane.WebTabbedPane;
 
+import meal.planner.Main;
 import meal.planner.dataBase.items.Meal;
 
 /**
@@ -45,7 +46,11 @@ public class MainPanel
 	public void addTab(Meal meal, boolean select) {
 
 		if (meal == null) {
-			MealPanel mealPanel = new MealPanel();
+
+			Meal newMeal = Main.getDb()
+													.newMeal();
+			newMeal.setName("New Meal");
+			MealPanel mealPanel = new MealPanel(newMeal);
 			WebScrollPane sPane = new WebScrollPane(mealPanel);
 			tabbedPane.add("New Meal", sPane);
 			panelMapping.put(sPane, mealPanel);
