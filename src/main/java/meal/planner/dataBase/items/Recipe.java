@@ -1,5 +1,7 @@
 package meal.planner.dataBase.items;
 
+import java.util.HashMap;
+
 public class Recipe extends Item<Ingredient>{
 	
 	public Recipe(int id){
@@ -29,5 +31,11 @@ public class Recipe extends Item<Ingredient>{
 
 	public void addIngredient(Ingredient ing, double amount) {
 		// TODO: FLO.... IMPLEMENT THIS!
+	}
+
+	public HashMap<Ingredient, Double> getIngredients() {
+		// TODO: FLO... IMPLEMENT THIS!
+		return null;
+
 	}
 }
