@@ -34,7 +34,8 @@ public class Ingredient extends Item<IngAttribute>{
 	}
 	
 	/** Returns the price of this ingredient */
-	public float getPrice(){
+	@Override
+	public double getPrice() {
 		assert isOk();
 		return price;
 	}

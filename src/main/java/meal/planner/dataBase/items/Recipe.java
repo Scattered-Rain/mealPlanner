@@ -10,6 +10,7 @@ public class Recipe extends Item<Ingredient>{
 	
 	private HashMap<Ingredient, Double> ings;
 	
+	@Override
 	protected boolean isOk(){
 		if(!super.isOk()){
 			return false;
@@ -49,7 +50,8 @@ public class Recipe extends Item<Ingredient>{
 	}
 	
 	/** Returns the price of this Recipe */
-	public float getPrice(){
+	@Override
+	public double getPrice() {
 		assert isOk();
 		float price = 0;
 		for(int c=0; c<subItems.size(); c++){
