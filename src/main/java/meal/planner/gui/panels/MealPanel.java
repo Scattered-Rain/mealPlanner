@@ -151,7 +151,12 @@ public class MealPanel
 		recipeAddField.setText(m.getDescription());
 		id = m.getId();
 
-		// TODO: Load in recipes
+		ArrayList<Recipe> recipes = m.getSubItems();
+		for (Recipe r : recipes) {
+			DefaultTableModel dtm = (DefaultTableModel) recipeTable.getModel();
+			dtm.addRow(new Object[] { r.getName(), r.getId() });
+		}
+		// TODO: Check if this works
 	}
 
 	private void addRecipe(Recipe recipe) {

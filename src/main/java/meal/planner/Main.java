@@ -57,7 +57,8 @@ public class Main {
 		} else {
 			// No database available, creating a new empty database.
 			db = new DataBase();
+			System.out.println(db);
 		}
-		new GUI(db);
+		new GUI();
 	}
 }

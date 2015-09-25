@@ -40,7 +40,7 @@ public class GUI {
 	final MainPanel mainPanel = new MainPanel();
 
 	/** Instantiates the GUI */
-	public GUI(DataBase db) {
+	public GUI() {
 		initialize();
 
 	}
@@ -64,15 +64,22 @@ public class GUI {
 
 				String json = SERIALIZER.toJson(db);
 				try {
-					FileWriter writer = new FileWriter(new File(FILE_DB));
+					File f = new File(FILE_DB);
+					File dir = new File(GlobalConstants.DIR_DB);
+					if (!dir.exists())
+						dir.mkdirs();
+
+					if (!f.exists()) {
+						f.createNewFile();
+					}
+					FileWriter writer = new FileWriter(f);
 					writer.write(json);
+					writer.close();
 					// TODO: Check if this produces proper json
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
-
 			}
-
 		});
 
 		// Set to the size of the screen
@@ -117,7 +124,6 @@ public class GUI {
 			// TODO: Rewrite to load from database rather than file
 			File f = WebFileChooser.showOpenDialog();
 
-
 			if (f != null && f.isFile()) {
 				if (f	.getName()
 						.endsWith(".meal")) {
@@ -144,8 +150,6 @@ public class GUI {
 
 		saveButton.addActionListener(e -> mainPanel.save(false));
 		exportPDFButton.addActionListener(e -> mainPanel.exportPDF());
-
-
 
 		// Add Components to the toolbar(s)
 		fileToolBar.add(newButton);

@@ -9,10 +9,10 @@ public class GlobalConstants {
 	/** Directory paths */
 	public static final String 
 		DIR_ICONS = "src/main/resources/assets/icons/", 
-		DIR_DB = System.getenv("APPDATA");
+		DIR_DB = System.getenv("APPDATA") + "/mealPlanner/";
 	
 	public static final String
-		FILE_DB = DIR_DB + "mealPlanner/db.json";
+		FILE_DB = DIR_DB + "db.json";
 	/** Icon Assets */
 	public static final String 
 		ICON_EXPORT_PDF = DIR_ICONS + "document-pdf-text.png",
