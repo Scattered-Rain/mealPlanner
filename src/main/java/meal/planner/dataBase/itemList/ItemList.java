@@ -44,7 +44,7 @@ public class ItemList<T extends Item, S> {
 	private ArrayList<T> findName(String name, ArrayList<T> items){
 		ArrayList<T> output = new ArrayList<T>();
 		for(T t : items){
-			if(t.getName().contains(name)){
+			if(t.getName().equals(name)){
 				output.add(t);
 			}
 		}
