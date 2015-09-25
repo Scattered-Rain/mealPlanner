@@ -119,8 +119,9 @@ public class MainPanel
 			} else {
 
 				Meal meal = (dataPanel).save();
+				int attendees = (int)dataPanel.getSpinner().getValue();
 				try {
-					writer.writePdf(meal, loc);
+					writer.writePdf(meal, loc, attendees);
 				} catch (DocumentException | IOException e) {
 					e.printStackTrace();
 				}
@@ -129,7 +130,7 @@ public class MainPanel
 	}
 
 	public void refreshSuggestions() {
-		for (int i = 0; i < tabbedPane.getTabCount() - 1; i++) {
+		for (int i = 0; i < tabbedPane.getTabCount(); i++) {
 			WebScrollPane sPane = (WebScrollPane) tabbedPane.getTabComponentAt(i);
 			DataPanel p = panelMapping.get(sPane);
 			if (p instanceof MealPanel) {

@@ -52,6 +52,8 @@ public class MealPanel
 	@Getter
 	ArrayList<Recipe> recipes;
 	private JTextArea txtDescription;
+	@Getter
+	WebSpinner spinner;
 
 	private MealPanel() {
 		recipes = new ArrayList<>();
@@ -74,7 +76,7 @@ public class MealPanel
 		WebLabel lblAttendees = new WebLabel("Attendees:");
 		add(lblAttendees, "cell 0 2");
 
-		WebSpinner spinner = new WebSpinner();
+		spinner = new WebSpinner();
 		add(spinner, "cell 1 2");
 
 		ingredientTable = new WebTable();
