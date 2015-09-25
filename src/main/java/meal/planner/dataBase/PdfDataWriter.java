@@ -16,16 +16,6 @@ import meal.planner.dataBase.items.Recipe;
 
 public class PdfDataWriter {
 	
-//	public static void main(String[] args){
-//		Meal meal = new Meal(2);
-//		meal.setName("sdfs");
-//		meal.setDescription("gggggggsdfsdf");
-//		File f = new File("C:/Users/Flo/Desktop/poopy.pdf");
-//		try{
-//			writePdf(meal, f);
-//		}catch(Exception ex){}
-//	}
-	
 	/** Creates a PDF of the given Meal */
 	public static void writePdf(Meal meal, File file) throws DocumentException, IOException{
 		Document document = new Document();
