@@ -19,7 +19,7 @@ public class Meal extends Item<Recipe>{
 	
 	/** Returns the price of the entre meal */
 	@Override
-	public float getPrice(){
+	public double getPrice() {
 		float price = 0;
 		for(Recipe r : subItems){
 			price += r.getPrice();

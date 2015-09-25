@@ -24,6 +24,7 @@ public class GlobalConstants {
 		ICON_RECIPE = DIR_ICONS + "hamburger.png",
 		ICON_SAVE = DIR_ICONS + "disk.png",
 		ICON_IMPORT = DIR_ICONS + "document-import.png",
+		ICON_INGREDIENT = DIR_ICONS + "fruit.png",
 		ICON_SAVE_ALL =DIR_ICONS + "disks.png";
 	
 	//@formatter:on

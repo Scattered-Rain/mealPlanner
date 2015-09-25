@@ -1,7 +1,5 @@
 package meal.planner.dataBase.items;
 
-import java.util.ArrayList;
-
 public class Recipe extends Item<Ingredient>{
 	
 	public Recipe(int id){
@@ -9,6 +7,7 @@ public class Recipe extends Item<Ingredient>{
 	}
 	
 	/** Returns whether this Recipe contains the given ingredient */
+	@Override
 	public boolean contains(Ingredient ing){
 		for(Ingredient i : subItems){
 			if(i.getId()==ing.getId()){
@@ -19,12 +18,12 @@ public class Recipe extends Item<Ingredient>{
 	}
 	
 	/** Returns the price of this Recipe */
-	public float getPrice(){
+	@Override
+	public double getPrice() {
 		float price = 0;
 		for(Ingredient i : subItems){
 			price += i.getPrice();
 		}
 		return price;
 	}
-	
 }

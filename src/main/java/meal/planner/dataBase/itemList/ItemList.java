@@ -88,10 +88,10 @@ public class ItemList<T extends Item, S> {
 	}
 	
 	/** Returns a list containing all the items that have a price between min and max price (-1 will be evaluated as no cap in this direction)*/
-	public ArrayList<T> findPrice(float minPrice, float maxPrice, ArrayList<T> items){
+	public ArrayList<T> findPrice(double minPrice, double maxPrice, ArrayList<T> items) {
 		ArrayList<T> output = new ArrayList<T>();
 		for(T t : items){
-			float price = t.getPrice();
+			double price = t.getPrice();
 			if((price>=minPrice || minPrice==-1) && (price<=maxPrice || maxPrice==-1)){
 				output.add(t);
 			}
@@ -100,7 +100,7 @@ public class ItemList<T extends Item, S> {
 	}
 	
 	/** Finds All items that meet all the given requirements, given null or -1 will be evaluated to not matter for the search */
-	public ArrayList<T> findAll(String name, float minPrice, float maxPrice, S ... parts){
+	public ArrayList<T> findAll(String name, double minPrice, double maxPrice, S... parts) {
 		ArrayList<T> output = items;
 		if(name!=null){
 			output = findName(name, output);

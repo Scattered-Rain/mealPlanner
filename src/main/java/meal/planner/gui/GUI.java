@@ -2,6 +2,7 @@ package meal.planner.gui;
 
 import static meal.planner.GlobalConstants.FILE_DB;
 import static meal.planner.GlobalConstants.ICON_EXPORT_PDF;
+import static meal.planner.GlobalConstants.ICON_INGREDIENT;
 import static meal.planner.GlobalConstants.ICON_NEW;
 import static meal.planner.GlobalConstants.ICON_NEW_RECIPE;
 import static meal.planner.GlobalConstants.ICON_OPEN;
@@ -31,6 +32,7 @@ import meal.planner.GlobalConstants;
 import meal.planner.Main;
 import meal.planner.dataBase.DataBase;
 import meal.planner.dataBase.items.Meal;
+import meal.planner.gui.panels.IngredientPanel;
 import meal.planner.gui.panels.MainPanel;
 import meal.planner.gui.panels.RecipePanel;
 
@@ -109,6 +111,7 @@ public class GUI {
 				newButton = new WebButton(new ImageIcon(ICON_NEW)),
 				newRecButton = new WebButton(new ImageIcon(ICON_NEW_RECIPE)),
 				saveButton = new WebButton(new ImageIcon(ICON_SAVE)),
+				ingredientButton = new WebButton(new ImageIcon(ICON_INGREDIENT)),
 				exportPDFButton = new WebButton(new ImageIcon(ICON_EXPORT_PDF));
 		//@formatter:on
 
@@ -116,6 +119,7 @@ public class GUI {
 		openButton.setToolTipText("Open Meal...");
 		saveButton.setToolTipText("Save As...");
 		exportPDFButton.setToolTipText("Export As PDF...");
+		ingredientButton.setToolTipText("Add new ingredient to database...");
 
 		// TODO: Button listeners
 		newButton.addActionListener(e -> mainPanel.addTab(null, true));
@@ -142,10 +146,21 @@ public class GUI {
 			}
 		});
 
+		ingredientButton.addActionListener(e -> {
+			IngredientPanel panel = new IngredientPanel();
+			int result = WebOptionPane.showConfirmDialog(mainFrame, panel, "Title", WebOptionPane.OK_CANCEL_OPTION);
+			if (result == WebOptionPane.OK_OPTION) {
+				panel.save();
+			}
+		});
+
 		newRecButton.addActionListener(e -> {
 
 			RecipePanel rPanel = new RecipePanel();
 			int result = WebOptionPane.showConfirmDialog(mainFrame, rPanel, "Title", WebOptionPane.OK_CANCEL_OPTION);
+			if (result == WebOptionPane.OK_OPTION) {
+				rPanel.save();
+			}
 		});
 
 		saveButton.addActionListener(e -> mainPanel.save(false));
@@ -158,6 +173,7 @@ public class GUI {
 		fileToolBar.add(exportPDFButton);
 
 		recipeToolbar.add(newRecButton);
+		recipeToolbar.add(ingredientButton);
 
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.add(fileToolBar);

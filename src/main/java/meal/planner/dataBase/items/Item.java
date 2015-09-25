@@ -59,6 +59,6 @@ public abstract class Item<S> {
 	public abstract boolean contains(S s);
 	
 	/** Returns the price of this item, as scaled to one person */
-	public abstract float getPrice();
+	public abstract double getPrice();
 
 }

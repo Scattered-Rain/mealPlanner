@@ -91,7 +91,13 @@ public class MealPanel
 		add(btnAdd, "cell 0 4");
 
 		recipeAddField = new JSuggestField<Meal>();
-		// TODO: Populate suggestions
+		ArrayList<Recipe> recipes = Main.getDb()
+										.getAllRecs();
+		ArrayList<String> rNames = new ArrayList<>();
+		for (Recipe r : recipes) {
+			rNames.add(r.getName());
+		}
+		recipeAddField.setSuggestData(rNames);
 
 		add(recipeAddField, "cell 1 4,growx");
 		recipeAddField.setColumns(10);
@@ -115,8 +121,11 @@ public class MealPanel
 				recipe = db.getRecipe(Integer.parseInt(text));
 
 			} else {
-				// TODO: Retrieve recipe by name
-				recipe = null;
+				ArrayList<Recipe> results = db.findRecipes(text, -1, -1, null);
+				if (results.size() > 0)
+					recipe = results.get(0);
+				else
+					recipe = null;
 			}
 
 			if (recipe != null) {
@@ -140,7 +149,7 @@ public class MealPanel
 			meal = db.newMeal();
 
 			meal.setDescription(txtDescription.getText());
-			meal.setName(txtName.getText()); // TODO: Check on valid input
+			meal.setName(txtName.getText());
 
 		}
 		return meal;

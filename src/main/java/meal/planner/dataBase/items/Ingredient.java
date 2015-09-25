@@ -1,13 +1,11 @@
 package meal.planner.dataBase.items;
 
-import java.util.ArrayList;
-
 import meal.planner.dataBase.IngAttribute;
 
 public class Ingredient extends Item<IngAttribute>{
 	
 	/** The price of this ingredient */
-	private float price;
+	private double price;
 	
 	public Ingredient(int id){
 		super(id);
@@ -15,6 +13,7 @@ public class Ingredient extends Item<IngAttribute>{
 	}
 	
 	/** Returns whether the Ingredient contains the given IngAttribute */
+	@Override
 	public boolean contains(IngAttribute att){
 		for(IngAttribute a : subItems){
 			if(a==att){
@@ -33,12 +32,13 @@ public class Ingredient extends Item<IngAttribute>{
 	}
 	
 	/** Returns the price of this ingredient */
-	public float getPrice(){
+	@Override
+	public double getPrice() {
 		return price;
 	}
 	
 	/** Sets the price of the current Ingredient */
-	public void setPrice(float price){
+	public void setPrice(double price) {
 		this.price = price;
 	}
 
