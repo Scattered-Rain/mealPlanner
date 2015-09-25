@@ -5,6 +5,7 @@ import static meal.planner.GlobalConstants.ICON_MIN;
 import static meal.planner.GlobalConstants.ICON_PLUS;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -22,6 +23,7 @@ import com.alee.laf.table.WebTable;
 import lombok.experimental.FieldDefaults;
 import meal.planner.Main;
 import meal.planner.dataBase.DataBase;
+import meal.planner.dataBase.items.Ingredient;
 import meal.planner.dataBase.items.Meal;
 import meal.planner.dataBase.items.Recipe;
 import meal.planner.external.JSuggestField;
@@ -45,6 +47,7 @@ public class MealPanel
 	JSuggestField<Meal> recipeAddField;
 	long id = -1;
 	WebTable recipeTable;
+	WebTable ingredientTable;
 
 	ArrayList<Recipe> recipes;
 	private JTextArea txtDescription;
@@ -73,7 +76,10 @@ public class MealPanel
 		WebSpinner spinner = new WebSpinner();
 		add(spinner, "cell 1 2");
 
-
+		ingredientTable = new WebTable();
+		DefaultTableModel ingDtm = new DefaultTableModel();
+		ingredientTable.setModel(ingDtm);
+		ingDtm.setColumnIdentifiers(new String[] { "Ingredient", "amount" });
 
 		WebLabel lblPrice = new WebLabel("Price:");
 		add(lblPrice, "cell 2 2");
@@ -87,7 +93,7 @@ public class MealPanel
 		});
 
 		recipeTable = new WebTable();
-		DefaultTableModel dtm = new DefaultTableModel();
+		DefaultTableModel dtm = ingDtm;
 		dtm.setColumnIdentifiers(new String[] { "ID", "Name" });
 		recipeTable.setModel(dtm);
 		recipeTable.setEditable(false);
@@ -130,6 +136,7 @@ public class MealPanel
 							.equals(rName)) {
 					recipes.remove(i);
 					updatePrice(spinner, lblValprice);
+					refreshShoppingList();
 					break;
 				}
 			}
@@ -163,6 +170,7 @@ public class MealPanel
 			if (recipe != null) {
 				addRecipe(recipe);
 				updatePrice(spinner, lblValprice);
+				refreshShoppingList();
 			}
 		});
 
@@ -221,5 +229,27 @@ public class MealPanel
 		}
 
 		return price;
+	}
+
+	private void refreshShoppingList() {
+		HashMap<Long, Integer> ingIDAmountMap = new HashMap<>();
+		for (Recipe r : recipes) {
+			HashMap<Ingredient, Double> ings = r.getIngredients();
+			for (Ingredient i : ings.keySet()) {
+				int amount = ingIDAmountMap.get(i.getId());
+				amount += ings.get(i);
+
+				ingIDAmountMap.put(i.getId(), amount);
+
+			}
+		}
+
+		DefaultTableModel dtm = (DefaultTableModel) ingredientTable.getModel();
+		dtm.setRowCount(0);
+		DataBase db = Main.getDb();
+		for (long ingID : ingIDAmountMap.keySet()) {
+			Ingredient i = db.getIngredient(ingID);
+			dtm.addRow(new Object[] { i.getName(), ingIDAmountMap.get(ingID) });
+		}
 	}
 }

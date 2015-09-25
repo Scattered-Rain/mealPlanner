@@ -26,7 +26,7 @@ public class DataBase {
 	}
 	
 	/** Returns the Ingredient with the specified Id */
-	public Ingredient getIngredient(int id){
+	public Ingredient getIngredient(long id) {
 		return ings.findId(id);
 	}
 	
