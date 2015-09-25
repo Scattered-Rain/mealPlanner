@@ -114,4 +114,24 @@ public class ItemList<T extends Item, S> {
 		return output;
 	}
 	
+	/** Returns a list of all items sorted according to id */
+	public ArrayList<T> getAll(){
+		return (ArrayList<T>)items.clone();
+	}
+	
+	/** Returns a list of all items sorted according to name */
+	public ArrayList<T> getAllSortedByName(){
+		ArrayList<T> output = (ArrayList<T>)items.clone();
+		for(int c=0; c<output.size(); c++){
+			for(int c2=c+1; c2<output.size(); c2++){
+				if(output.get(c2).getName().compareTo(output.get(c).getName())<0){
+					T help = output.get(c);
+					output.set(c, output.get(c2));
+					output.set(c2, help);
+				}
+			}
+		}
+		return output;
+	}
+	
 }
