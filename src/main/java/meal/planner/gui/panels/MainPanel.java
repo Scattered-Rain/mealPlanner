@@ -8,7 +8,6 @@ import meal.planner.dataBase.items.Meal;
 
 /**
  * The main panel designed to hold all sub panels (in tabs)
- * TODO: Elaborate comments
  * 
  * @author pieter
  *

@@ -1,16 +1,21 @@
 package meal.planner.gui;
 
+import static meal.planner.GlobalConstants.FILE_DB;
 import static meal.planner.GlobalConstants.ICON_EXPORT_PDF;
 import static meal.planner.GlobalConstants.ICON_NEW;
 import static meal.planner.GlobalConstants.ICON_NEW_RECIPE;
 import static meal.planner.GlobalConstants.ICON_OPEN;
 import static meal.planner.GlobalConstants.ICON_SAVE;
-import static meal.planner.GlobalConstants.ICON_SAVE_ALL;
+import static meal.planner.GlobalConstants.SERIALIZER;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JMenuBar;
@@ -23,6 +28,7 @@ import com.alee.laf.rootpane.WebFrame;
 import com.alee.laf.toolbar.WebToolBar;
 
 import meal.planner.GlobalConstants;
+import meal.planner.Main;
 import meal.planner.dataBase.DataBase;
 import meal.planner.dataBase.items.Meal;
 import meal.planner.gui.panels.MainPanel;
@@ -47,13 +53,33 @@ public class GUI {
 		mainFrame = new WebFrame("MealOMatic V1.0");
 		mainFrame.setContentPane(mainPanel);
 
+		mainFrame.addWindowListener(new WindowAdapter() {
+
+			@Override
+			public void windowClosing(WindowEvent e) {
+				super.windowClosing(e);
+
+				// Serialize and save the database
+				DataBase db = Main.getDb();
+
+				String json = SERIALIZER.toJson(db);
+				try {
+					FileWriter writer = new FileWriter(new File(FILE_DB));
+					writer.write(json);
+					// TODO: Check if this produces proper json
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+
+			}
+
+		});
+
 		// Set to the size of the screen
 		Dimension d = Toolkit	.getDefaultToolkit()
 								.getScreenSize();
 
-		// TODO: Set back to fullscreen after finishing rest
 		mainFrame.setSize(d.width / 2, d.height / 2);
-		// TODO: Set the proper size (dealing with toolbars etc.)
 		setupMenu();
 		mainFrame.setDefaultCloseOperation(WebFrame.EXIT_ON_CLOSE);
 		mainFrame.setVisible(true);
@@ -76,7 +102,6 @@ public class GUI {
 				newButton = new WebButton(new ImageIcon(ICON_NEW)),
 				newRecButton = new WebButton(new ImageIcon(ICON_NEW_RECIPE)),
 				saveButton = new WebButton(new ImageIcon(ICON_SAVE)),
-				saveAllButton = new WebButton(new ImageIcon(ICON_SAVE_ALL)),
 				exportPDFButton = new WebButton(new ImageIcon(ICON_EXPORT_PDF));
 		//@formatter:on
 
@@ -89,7 +114,7 @@ public class GUI {
 		newButton.addActionListener(e -> mainPanel.addTab(null, true));
 
 		openButton.addActionListener(e -> {
-			// TODO: Possible filter on what can be opened
+			// TODO: Rewrite to load from database rather than file
 			File f = WebFileChooser.showOpenDialog();
 
 
@@ -107,9 +132,7 @@ public class GUI {
 														WebOptionPane.ERROR_MESSAGE);
 						e1.printStackTrace();
 					}
-
 				}
-				// TODO: Perhaps else do something with a recipe?
 			}
 		});
 
@@ -120,7 +143,6 @@ public class GUI {
 		});
 
 		saveButton.addActionListener(e -> mainPanel.save(false));
-		saveAllButton.addActionListener(e -> mainPanel.save(true));
 		exportPDFButton.addActionListener(e -> mainPanel.exportPDF());
 
 
@@ -129,7 +151,6 @@ public class GUI {
 		fileToolBar.add(newButton);
 		fileToolBar.add(openButton);
 		fileToolBar.add(saveButton);
-		fileToolBar.add(saveAllButton);
 		fileToolBar.add(exportPDFButton);
 
 		recipeToolbar.add(newRecButton);
@@ -140,7 +161,5 @@ public class GUI {
 
 		mainFrame.setJMenuBar(menuBar);
 		mainFrame.revalidate();
-		// TODO: populate menu
-		// TODO: Why isn't the menu showing up? What did I forget?
 	}
 }
