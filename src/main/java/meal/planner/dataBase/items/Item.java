@@ -52,6 +52,19 @@ public abstract class Item<S> {
 		this.description = description;
 	}
 	
+	public void addSub(S subItem){
+		this.subItems.add(subItem);
+	}
+	
+	public void removeSub(S subItem){
+		for(int c=0; c<subItems.size(); c++){
+			if(subItems.get(c).equals(subItem)){
+				subItems.remove(c);
+				return;
+			}
+		}
+	}
+	
 	public ArrayList<S> getSubs(){
 		return (ArrayList<S>)subItems.clone();
 	}
@@ -61,5 +74,14 @@ public abstract class Item<S> {
 	
 	/** Returns the price of this item, as scaled to one person */
 	public abstract float getPrice();
+	
+	public boolean equals(Object item){
+		if(item instanceof Item){
+			if(this.getId()==((Item)item).getId()){
+				return true;
+			}
+		}
+		return false;
+	}
 
 }
