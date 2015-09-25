@@ -97,9 +97,9 @@ public class DataBase {
 		return meals.getAllSortedByName();
 	}
 	
-	public void makePdf(Meal meal, File file){
+	public void makePdf(Meal meal, File file, int attendees){
 		try{
-			PdfDataWriter.writePdf(meal, file);
+			PdfDataWriter.writePdf(meal, file, attendees);
 		}catch(Exception ex){
 			System.out.println("Couldn't wrte file");
 		}
