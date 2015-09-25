@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -44,4 +45,17 @@ public class PdfDataWriter {
 		document.close();
 	}
 	
+	public static void writePdf(HashMap<Ingredient, Double> ingrdients, File file) throws DocumentException, IOException {
+		Document document = new Document();
+		PdfWriter.getInstance(document, new FileOutputStream(file));
+		document.open();
+		document.add(new Paragraph("Shopping List"));
+		document.add(new Paragraph(""));
+		document.add(new Paragraph(""));
+		document.add(new Paragraph("Items:"));
+		for (Ingredient i : ingrdients.keySet()) {
+			document.add(new Paragraph(String.format("%sx - %s", ingrdients.get(i), i.getName())));
+		}
+		document.close();
+	}
 }

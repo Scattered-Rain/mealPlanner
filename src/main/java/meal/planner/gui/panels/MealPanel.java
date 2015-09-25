@@ -19,6 +19,7 @@ import com.alee.laf.panel.WebPanel;
 import com.alee.laf.spinner.WebSpinner;
 import com.alee.laf.table.WebTable;
 
+import lombok.Getter;
 import lombok.experimental.FieldDefaults;
 import meal.planner.Main;
 import meal.planner.dataBase.DataBase;
@@ -48,6 +49,7 @@ public class MealPanel
 	WebTable recipeTable;
 	WebTable ingredientTable;
 
+	@Getter
 	ArrayList<Recipe> recipes;
 	private JTextArea txtDescription;
 
@@ -233,14 +235,14 @@ public class MealPanel
 	private void refreshShoppingList() {
 		HashMap<Long, Integer> ingIDAmountMap = new HashMap<>();
 		for (Recipe r : recipes) {
-			HashMap<Ingredient, Double> ings = r.getIngredients();
-			for (Ingredient i : ings.keySet()) {
-				int amount = ingIDAmountMap.get(i.getId());
-				amount += ings.get(i);
-
-				ingIDAmountMap.put(i.getId(), amount);
-
-			}
+			// HashMap<Ingredient, Double> ings = r. TODO: get ingredients and their amounts
+			// for (Ingredient i : ings.keySet()) {
+			// int amount = ingIDAmountMap.get(i.getId());
+			// amount += ings.get(i);
+			//
+			// ingIDAmountMap.put(i.getId(), amount);
+			//
+			// }
 		}
 
 		DefaultTableModel dtm = (DefaultTableModel) ingredientTable.getModel();
