@@ -16,6 +16,7 @@ public class Ingredient extends Item<IngAttribute>{
 	
 	/** Returns whether the Ingredient contains the given IngAttribute */
 	public boolean contains(IngAttribute att){
+		assert isOk();
 		for(IngAttribute a : subItems){
 			if(a==att){
 				return true;
@@ -29,16 +30,19 @@ public class Ingredient extends Item<IngAttribute>{
 				}
 			}
 		}
+		assert isOk();
 		return false;
 	}
 	
 	/** Returns the price of this ingredient */
 	public float getPrice(){
+		assert isOk();
 		return price;
 	}
 	
 	/** Sets the price of the current Ingredient */
 	public void setPrice(float price){
+		assert isOk();
 		this.price = price;
 	}
 
