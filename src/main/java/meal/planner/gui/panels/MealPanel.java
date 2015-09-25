@@ -24,11 +24,11 @@ import meal.planner.Main;
 import meal.planner.dataBase.DataBase;
 import meal.planner.dataBase.items.Meal;
 import meal.planner.dataBase.items.Recipe;
+import meal.planner.external.JSuggestField;
 import net.miginfocom.swing.MigLayout;
 
 /**
  * A panel for showing and editting all information for a meal.
- * TODO: Elaborate comments
  * 
  * @author pieter
  *
@@ -36,17 +36,18 @@ import net.miginfocom.swing.MigLayout;
 @FieldDefaults(level = PRIVATE)
 public class MealPanel
 		extends WebPanel
-		implements SerializablePanel {
+		implements DataPanel<Meal> {
 	/**
 	 * 
 	 */
 	static final long serialVersionUID = 1L;
 	JTextField txtName;
-	JTextField recipeAddField;
+	JSuggestField<Meal> recipeAddField;
 	long id = -1;
 	WebTable recipeTable;
 
 	ArrayList<Recipe> recipes;
+	private JTextArea txtDescription;
 
 	public MealPanel() {
 		recipes = new ArrayList<>();
@@ -63,9 +64,8 @@ public class MealPanel
 		WebLabel lblDescription = new WebLabel("Description:");
 		add(lblDescription, "cell 0 1");
 
-		JTextArea txtrValdesc = new JTextArea();
-		txtrValdesc.setText("valDesc");
-		add(txtrValdesc, "cell 1 1 3 1,grow");
+		txtDescription = new JTextArea();
+		add(txtDescription, "cell 1 1 3 1,grow");
 
 		WebLabel lblAttendees = new WebLabel("Attendees:");
 		add(lblAttendees, "cell 0 2");
@@ -90,7 +90,9 @@ public class MealPanel
 		JButton btnAdd = new JButton("Add", new ImageIcon(ICON_PLUS));
 		add(btnAdd, "cell 0 4");
 
-		recipeAddField = new JTextField();
+		recipeAddField = new JSuggestField<Meal>();
+		// TODO: Populate suggestions
+
 		add(recipeAddField, "cell 1 4,growx");
 		recipeAddField.setColumns(10);
 
@@ -130,14 +132,18 @@ public class MealPanel
 	}
 
 	@Override
-	public void save() {
+	public Meal save() {
 		DataBase db = Main.getDb();
 		Meal meal = db.getMeal(id);
 		if (meal == null) {
 			// TODO: Implement saving to database
-			// meal = db.
-		}
+			meal = db.newMeal();
 
+			meal.setDescription(txtDescription.getText());
+			meal.setName(txtName.getText()); // TODO: Check on valid input
+
+		}
+		return meal;
 	}
 
 	public void load(Meal m) {

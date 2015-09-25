@@ -18,6 +18,8 @@ import com.alee.laf.filechooser.WebFileChooser;
 import com.alee.laf.optionpane.WebOptionPane;
 import com.alee.laf.panel.WebPanel;
 
+import meal.planner.Main;
+import meal.planner.dataBase.DataBase;
 import meal.planner.dataBase.items.Recipe;
 import net.miginfocom.swing.MigLayout;
 
@@ -28,12 +30,15 @@ import net.miginfocom.swing.MigLayout;
  *
  */
 public class RecipePanel
-		extends WebPanel {
+		extends WebPanel
+		implements DataPanel<Recipe> {
 	/**
 	 * Default serial
 	 */
 	private static final long serialVersionUID = 1L;
 	private JTextField textField;
+
+	private long id = -1;
 
 	public RecipePanel() {
 		setLayout(new MigLayout("", "[][grow]", "[][][grow][][]"));
@@ -73,6 +78,24 @@ public class RecipePanel
 
 		WebButton button_1 = new WebButton(new ImageIcon(ICON_MIN));
 		add(button_1, "cell 1 3");
+	}
+
+	@Override
+	public Recipe save() {
+		DataBase db = Main.getDb();
+
+		Recipe r;
+		if (id > -1) {
+			r = db.getRecipe(id);
+			if (r == null)
+				r = db.newRecipe();
+		} else {
+			r = db.newRecipe();
+		}
+
+		// TODO: Populate the recipe from the fields
+
+		return r;
 	}
 
 }

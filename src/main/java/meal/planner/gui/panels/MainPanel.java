@@ -8,7 +8,6 @@ import meal.planner.dataBase.items.Meal;
 
 /**
  * The main panel designed to hold all sub panels (in tabs)
- * TODO: Elaborate comments
  * 
  * @author pieter
  *
@@ -30,8 +29,7 @@ public class MainPanel
 
 	private void initialize() {
 		tabbedPane = new WebTabbedPane();
-		tabbedPane.addTab("New Meal", new WebScrollPane(new MealPanel()));
-
+		addTab(null, true);
 		add(tabbedPane);
 	}
 
@@ -44,10 +42,10 @@ public class MainPanel
 	public void addTab(Meal meal, boolean select) {
 
 		if (meal == null)
-			tabbedPane.add("New Meal", new MealPanel());
+			tabbedPane.add("New Meal", new WebScrollPane(new MealPanel()));
 		else {
 			// TODO: Check if name is not empty and/or null
-			tabbedPane.add(meal.getName(), new MealPanel());
+			tabbedPane.add(meal.getName(), new WebScrollPane(new MealPanel()));
 		}
 		// Add extra functionality
 		tabbedPane.getTabComponentAt(tabbedPane.getTabCount() - 1);

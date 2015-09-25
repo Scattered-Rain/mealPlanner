@@ -11,7 +11,6 @@ import java.util.Date;
 
 import com.alee.laf.optionpane.WebOptionPane;
 
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import meal.planner.dataBase.DataBase;
@@ -21,7 +20,6 @@ import meal.planner.gui.GUI;
 public class Main {
 	@Getter
 	private static DataBase db;
-
 
 	public static void main(String[] args) {
 
