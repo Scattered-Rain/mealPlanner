@@ -9,7 +9,6 @@ import java.util.HashMap;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
@@ -144,7 +143,7 @@ public class MealPanel
 			dtm.removeRow(selRow);
 		});
 
-		WebCollapsiblePane shoppingPane = new WebCollapsiblePane("Shopping List", new JLabel("Lorem ipsum BLABLABLA"));
+		WebCollapsiblePane shoppingPane = new WebCollapsiblePane("Shopping List", ingredientTable);
 		shoppingPane.setExpanded(false);
 		add(shoppingPane, "cell 0 5 3 1,growx");
 
