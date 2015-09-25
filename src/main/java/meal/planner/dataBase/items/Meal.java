@@ -20,7 +20,7 @@ public class Meal extends Item<Recipe>{
 	}
 	
 	/** Returns the price of the entre meal */
-	public float getPrice(){
+	public double getPrice(){
 		assert isOk();
 		float price = 0;
 		for(Recipe r : subItems){

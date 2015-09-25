@@ -49,7 +49,7 @@ public class Recipe extends Item<Ingredient>{
 	}
 	
 	/** Returns the price of this Recipe */
-	public float getPrice(){
+	public double getPrice(){
 		assert isOk();
 		float price = 0;
 		for(int c=0; c<subItems.size(); c++){
