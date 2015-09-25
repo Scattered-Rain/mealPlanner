@@ -49,7 +49,7 @@ public class MealPanel
 	ArrayList<Recipe> recipes;
 	private JTextArea txtDescription;
 
-	public MealPanel() {
+	private MealPanel() {
 		recipes = new ArrayList<>();
 		setLayout(new MigLayout("", "[][grow][][]", "[][grow][][grow][][]"));
 
@@ -73,13 +73,21 @@ public class MealPanel
 		WebSpinner spinner = new WebSpinner();
 		add(spinner, "cell 1 2");
 
+		spinner.addChangeListener(e -> {
+			// Update the price
+			// TODO: Calculate price
+		});
+
 		WebLabel lblPrice = new WebLabel("Price");
 		add(lblPrice, "cell 2 2");
 
 		WebLabel lblValprice = new WebLabel("valPrice");
 		add(lblValprice, "cell 3 2");
 
-		recipeTable = new WebTable(new String[0][0], new String[] { "ID", "Name" });
+		recipeTable = new WebTable();
+		DefaultTableModel dtm = new DefaultTableModel();
+		dtm.setColumnIdentifiers(new String[] { "ID", "Name" });
+		recipeTable.setModel(dtm);
 		recipeTable.setEditable(false);
 		recipeTable.setColumnSelectionAllowed(false);
 		recipeTable.setRowSelectionAllowed(true);
@@ -91,13 +99,40 @@ public class MealPanel
 		add(btnAdd, "cell 0 4");
 
 		recipeAddField = new JSuggestField<Meal>();
-		// TODO: Populate suggestions
+		ArrayList<Recipe> recipes = Main.getDb()
+										.getAllRecs();
+		ArrayList<String> rNames = new ArrayList<>();
+		for (Recipe r : recipes) {
+			rNames.add(r.getName());
+		}
+		recipeAddField.setSuggestData(rNames);
 
 		add(recipeAddField, "cell 1 4,growx");
 		recipeAddField.setColumns(10);
 
 		JButton btnRemove = new JButton("Remove", new ImageIcon(ICON_MIN));
 		add(btnRemove, "cell 3 4");
+
+		btnRemove.addActionListener(e -> {
+			int selRow = recipeTable.getSelectedRow();
+
+			if (selRow < 0)
+				return;
+
+			String rName = (String) dtm.getValueAt(selRow, 1);
+
+			// Remove from recipes list
+			for (int i = 0; i < recipes.size(); i++) {
+				if (recipes	.get(i)
+							.getName()
+							.equals(rName)) {
+					recipes.remove(i);
+					break;
+				}
+			}
+
+			dtm.removeRow(selRow);
+		});
 
 		WebCollapsiblePane shoppingPane = new WebCollapsiblePane("Shopping List", new JLabel("Lorem ipsum BLABLABLA"));
 		shoppingPane.setExpanded(false);
@@ -115,8 +150,11 @@ public class MealPanel
 				recipe = db.getRecipe(Integer.parseInt(text));
 
 			} else {
-				// TODO: Retrieve recipe by name
-				recipe = null;
+				ArrayList<Recipe> results = db.findRecipes(text, -1, -1, null);
+				if (results.size() > 0)
+					recipe = results.get(0);
+				else
+					recipe = null;
 			}
 
 			if (recipe != null) {
@@ -138,9 +176,10 @@ public class MealPanel
 		if (meal == null) {
 			// TODO: Implement saving to database
 			meal = db.newMeal();
+			id = meal.getId();
 
 			meal.setDescription(txtDescription.getText());
-			meal.setName(txtName.getText()); // TODO: Check on valid input
+			meal.setName(txtName.getText());
 
 		}
 		return meal;
@@ -151,7 +190,11 @@ public class MealPanel
 		recipeAddField.setText(m.getDescription());
 		id = m.getId();
 
-		// TODO: Load in recipes
+		ArrayList<Recipe> recipes = m.getSubItems();
+		for (Recipe r : recipes) {
+			DefaultTableModel dtm = (DefaultTableModel) recipeTable.getModel();
+			dtm.addRow(new Object[] { r.getName(), r.getId() });
+		}
 	}
 
 	private void addRecipe(Recipe recipe) {

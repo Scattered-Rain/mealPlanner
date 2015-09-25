@@ -1,9 +1,12 @@
 package meal.planner.gui.panels;
 
+import java.util.HashMap;
+
 import com.alee.laf.panel.WebPanel;
 import com.alee.laf.scroll.WebScrollPane;
 import com.alee.laf.tabbedpane.WebTabbedPane;
 
+import meal.planner.Main;
 import meal.planner.dataBase.items.Meal;
 
 /**
@@ -16,6 +19,7 @@ public class MainPanel
 		extends WebPanel {
 
 	private WebTabbedPane tabbedPane;
+	private HashMap<WebScrollPane, DataPanel> panelMapping = new HashMap<>();
 	/**
 	 * 
 	 */
@@ -41,11 +45,20 @@ public class MainPanel
 	 */
 	public void addTab(Meal meal, boolean select) {
 
-		if (meal == null)
-			tabbedPane.add("New Meal", new WebScrollPane(new MealPanel()));
-		else {
-			// TODO: Check if name is not empty and/or null
-			tabbedPane.add(meal.getName(), new WebScrollPane(new MealPanel()));
+		if (meal == null) {
+
+			Meal newMeal = Main.getDb()
+													.newMeal();
+			newMeal.setName("New Meal");
+			MealPanel mealPanel = new MealPanel(newMeal);
+			WebScrollPane sPane = new WebScrollPane(mealPanel);
+			tabbedPane.add("New Meal", sPane);
+			panelMapping.put(sPane, mealPanel);
+		} else {
+			MealPanel mealPanel = new MealPanel(meal);
+			WebScrollPane sPane = new WebScrollPane(mealPanel);
+			tabbedPane.add(meal.getName(), sPane);
+			panelMapping.put(sPane, mealPanel);
 		}
 		// Add extra functionality
 		tabbedPane.getTabComponentAt(tabbedPane.getTabCount() - 1);
@@ -56,8 +69,10 @@ public class MainPanel
 	}
 
 	public void save(boolean all) {
-		throw new UnsupportedOperationException();
-		// TODO: Implement this
+		int selIndex = tabbedPane.getSelectedIndex();
+		WebScrollPane sPane = (WebScrollPane) tabbedPane.getComponent(selIndex);
+		DataPanel p = panelMapping.get(sPane);
+		p.save();
 	}
 
 	public void exportPDF() {

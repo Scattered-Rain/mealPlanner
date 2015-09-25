@@ -2,14 +2,12 @@ package meal.planner.dataBase;
 
 import java.util.ArrayList;
 
-import lombok.Data;
 import meal.planner.dataBase.itemList.ItemList;
 import meal.planner.dataBase.items.Ingredient;
 import meal.planner.dataBase.items.Meal;
 import meal.planner.dataBase.items.Recipe;
 
 /** This class serves as the central storage and access unit */
-@Data
 public class DataBase {
 	
 	/** An Item List containing all Ingredients */
