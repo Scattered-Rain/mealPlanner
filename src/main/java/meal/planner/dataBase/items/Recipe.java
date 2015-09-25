@@ -1,6 +1,6 @@
 package meal.planner.dataBase.items;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 
 public class Recipe extends Item<Ingredient>{
 	
@@ -34,6 +34,7 @@ public class Recipe extends Item<Ingredient>{
 	}
 	
 	/** Adds Ingredient with default Quantity 1 */
+	@Override
 	public void addSub(Ingredient subItem){
 		this.subItems.add(subItem);
 		this.ingQuant.add(1.0);
@@ -44,6 +45,7 @@ public class Recipe extends Item<Ingredient>{
 		this.ingQuant.add(quantity);
 	}
 	
+	@Override
 	public void removeSub(Ingredient subItem){
 		for(int c=0; c<subItems.size(); c++){
 			if(subItems.get(c).equals(subItem)){
@@ -54,6 +56,7 @@ public class Recipe extends Item<Ingredient>{
 		}
 	}
 	
+	@Override
 	public void removeSub(int index){
 		subItems.remove(index);
 		ingQuant.remove(index);
