@@ -73,16 +73,18 @@ public class MealPanel
 		WebSpinner spinner = new WebSpinner();
 		add(spinner, "cell 1 2");
 
-		spinner.addChangeListener(e -> {
-			// Update the price
-			// TODO: Calculate price
-		});
 
-		WebLabel lblPrice = new WebLabel("Price");
+
+		WebLabel lblPrice = new WebLabel("Price:");
 		add(lblPrice, "cell 2 2");
 
-		WebLabel lblValprice = new WebLabel("valPrice");
+		WebLabel lblValprice = new WebLabel("");
 		add(lblValprice, "cell 3 2");
+
+		spinner.addChangeListener(e -> {
+			// Update the price
+			updatePrice(spinner, lblValprice);
+		});
 
 		recipeTable = new WebTable();
 		DefaultTableModel dtm = new DefaultTableModel();
@@ -127,6 +129,7 @@ public class MealPanel
 							.getName()
 							.equals(rName)) {
 					recipes.remove(i);
+					updatePrice(spinner, lblValprice);
 					break;
 				}
 			}
@@ -159,9 +162,14 @@ public class MealPanel
 
 			if (recipe != null) {
 				addRecipe(recipe);
+				updatePrice(spinner, lblValprice);
 			}
 		});
 
+	}
+
+	private void updatePrice(WebSpinner spinner, WebLabel lblValprice) {
+		lblValprice.setText("$" + calcTotalPrice() * ((Integer) spinner.getValue()).doubleValue());
 	}
 
 	public MealPanel(Meal m) {
@@ -174,7 +182,6 @@ public class MealPanel
 		DataBase db = Main.getDb();
 		Meal meal = db.getMeal(id);
 		if (meal == null) {
-			// TODO: Implement saving to database
 			meal = db.newMeal();
 			id = meal.getId();
 
@@ -205,5 +212,14 @@ public class MealPanel
 		DefaultTableModel tModel = (DefaultTableModel) recipeTable.getModel();
 		tModel.addRow(new Object[] { recipe.getId(), recipe.getName() });
 
+	}
+
+	private double calcTotalPrice() {
+		double price = 0;
+		for (Recipe r : recipes) {
+			price += r.getPrice();
+		}
+
+		return price;
 	}
 }
