@@ -109,7 +109,7 @@ public class ItemList<T extends Item, S> {
 		ArrayList<T> output = new ArrayList<T>();
 		for(T t : items){
 			float price = t.getPrice();
-			if((price>=minPrice || minPrice==-1) && (price<=maxPrice || maxPrice==-1)){
+			if((price>=minPrice || minPrice<0) && (price<=maxPrice || maxPrice<0)){
 				output.add(t);
 			}
 		}
