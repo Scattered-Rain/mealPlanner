@@ -1,5 +1,6 @@
 package meal.planner.dataBase;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import meal.planner.dataBase.itemList.ItemList;
@@ -94,6 +95,15 @@ public class DataBase {
 	
 	public ArrayList<Meal> getAllMealsSortedByName(){
 		return meals.getAllSortedByName();
+	}
+	
+	public void makePdf(Meal meal, File file){
+		try{
+			PdfDataWriter.writePdf(meal, file);
+		}catch(Exception ex){
+			System.out.println("Couldn't wrte file");
+		}
+		
 	}
 	
 }
