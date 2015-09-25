@@ -75,15 +75,15 @@ public class MealPanel
 
 
 
-		WebLabel lblPrice = new WebLabel("Price");
+		WebLabel lblPrice = new WebLabel("Price:");
 		add(lblPrice, "cell 2 2");
 
-		WebLabel lblValprice = new WebLabel("valPrice");
+		WebLabel lblValprice = new WebLabel("");
 		add(lblValprice, "cell 3 2");
 
 		spinner.addChangeListener(e -> {
 			// Update the price
-			lblValprice.setText("$" + calcTotalPrice() * ((Integer) spinner.getValue()).doubleValue());
+			updatePrice(spinner, lblValprice);
 		});
 
 		recipeTable = new WebTable();
@@ -129,6 +129,7 @@ public class MealPanel
 							.getName()
 							.equals(rName)) {
 					recipes.remove(i);
+					updatePrice(spinner, lblValprice);
 					break;
 				}
 			}
@@ -161,9 +162,14 @@ public class MealPanel
 
 			if (recipe != null) {
 				addRecipe(recipe);
+				updatePrice(spinner, lblValprice);
 			}
 		});
 
+	}
+
+	private void updatePrice(WebSpinner spinner, WebLabel lblValprice) {
+		lblValprice.setText("$" + calcTotalPrice() * ((Integer) spinner.getValue()).doubleValue());
 	}
 
 	public MealPanel(Meal m) {
