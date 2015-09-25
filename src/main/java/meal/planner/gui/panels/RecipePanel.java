@@ -117,7 +117,6 @@ public class RecipePanel
 
 		WebButton btnRemove = new WebButton(new ImageIcon(ICON_MIN));
 		add(btnRemove, "cell 1 3");
-		// TODO: Implement remove logic
 		btnRemove.addActionListener(e -> {
 			int selRow = ingredientTable.getSelectedRow();
 			if (selRow < 0)

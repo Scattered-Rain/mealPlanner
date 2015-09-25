@@ -14,17 +14,18 @@ import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JMenuBar;
 
 import com.alee.laf.WebLookAndFeel;
 import com.alee.laf.button.WebButton;
-import com.alee.laf.filechooser.WebFileChooser;
+import com.alee.laf.label.WebLabel;
 import com.alee.laf.optionpane.WebOptionPane;
+import com.alee.laf.panel.WebPanel;
 import com.alee.laf.rootpane.WebFrame;
 import com.alee.laf.toolbar.WebToolBar;
 
@@ -32,6 +33,7 @@ import meal.planner.GlobalConstants;
 import meal.planner.Main;
 import meal.planner.dataBase.DataBase;
 import meal.planner.dataBase.items.Meal;
+import meal.planner.external.JSuggestField;
 import meal.planner.gui.panels.IngredientPanel;
 import meal.planner.gui.panels.MainPanel;
 import meal.planner.gui.panels.RecipePanel;
@@ -77,7 +79,6 @@ public class GUI {
 					FileWriter writer = new FileWriter(f);
 					writer.write(json);
 					writer.close();
-					// TODO: Check if this produces proper json
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
@@ -125,25 +126,33 @@ public class GUI {
 		newButton.addActionListener(e -> mainPanel.addTab(null, true));
 
 		openButton.addActionListener(e -> {
-			// TODO: Rewrite to load from database rather than file
-			File f = WebFileChooser.showOpenDialog();
+			DataBase db = Main.getDb();
+			ArrayList<Meal> meals = db.getAllMeals();
+			ArrayList<String> suggestions = new ArrayList<>();
 
-			if (f != null && f.isFile()) {
-				if (f	.getName()
-						.endsWith(".meal")) {
-					// Opening a meal
-					try {
-						Meal meal = GlobalConstants.SERIALIZER.fromJson(new FileReader(f), Meal.class);
-						mainPanel.addTab(meal, true);
-					} catch (Exception e1) {
-						WebOptionPane.showMessageDialog(mainFrame,
-														"Unable to load meal, data appears corrupt",
-														"Error Loading File",
-														WebOptionPane.ERROR_MESSAGE);
-						e1.printStackTrace();
+			for (Meal m : meals)
+				suggestions.add(m.getName());
+			
+			JSuggestField<String> field = new JSuggestField<>();
+			
+			WebPanel panel = new WebPanel();
+			panel.add(new WebLabel("Meal Name"));
+			field.setSuggestData(suggestions);
+			panel.add(field);
+			
+			int result = WebOptionPane.showConfirmDialog(mainFrame, panel, "Open Meal", WebOptionPane.OK_CANCEL_OPTION);
+			
+			if(result == WebOptionPane.OK_OPTION){
+				if(field.getSuggestData().contains(field.getText())){
+					ArrayList<Meal> r = db.findMeals(field.getText(), -1, -1, null);
+					if(r.size() >0){
+						mainPanel.addTab(r.get(0), true);
 					}
+						
 				}
+					
 			}
+
 		});
 
 		ingredientButton.addActionListener(e -> {

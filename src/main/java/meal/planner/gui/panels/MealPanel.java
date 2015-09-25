@@ -189,7 +189,6 @@ public class MealPanel
 			DefaultTableModel dtm = (DefaultTableModel) recipeTable.getModel();
 			dtm.addRow(new Object[] { r.getName(), r.getId() });
 		}
-		// TODO: Check if this works
 	}
 
 	private void addRecipe(Recipe recipe) {
