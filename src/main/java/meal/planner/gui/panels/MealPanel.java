@@ -235,14 +235,14 @@ public class MealPanel
 	private void refreshShoppingList() {
 		HashMap<Long, Integer> ingIDAmountMap = new HashMap<>();
 		for (Recipe r : recipes) {
-			// HashMap<Ingredient, Double> ings = r. TODO: get ingredients and their amounts
-			// for (Ingredient i : ings.keySet()) {
-			// int amount = ingIDAmountMap.get(i.getId());
-			// amount += ings.get(i);
-			//
-			// ingIDAmountMap.put(i.getId(), amount);
-			//
-			// }
+			HashMap<Ingredient, Double> ings = r.getHashIngs();
+			for (Ingredient i : ings.keySet()) {
+				int amount = ingIDAmountMap.get(i.getId());
+				amount += ings.get(i);
+
+				ingIDAmountMap.put(i.getId(), amount);
+
+			}
 		}
 
 		DefaultTableModel dtm = (DefaultTableModel) ingredientTable.getModel();
@@ -252,5 +252,15 @@ public class MealPanel
 			Ingredient i = db.getIngredient(ingID);
 			dtm.addRow(new Object[] { i.getName(), ingIDAmountMap.get(ingID) });
 		}
+	}
+
+	public void refreshSuggestions() {
+		ArrayList<Recipe> recipes = Main.getDb()
+										.getAllRecs();
+		ArrayList<String> rNames = new ArrayList<>();
+		for (Recipe r : recipes) {
+			rNames.add(r.getName());
+		}
+		recipeAddField.setSuggestData(rNames);
 	}
 }

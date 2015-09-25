@@ -18,6 +18,7 @@ import com.itextpdf.text.DocumentException;
 
 import meal.planner.Main;
 import meal.planner.dataBase.PdfDataWriter;
+import meal.planner.dataBase.items.Ingredient;
 import meal.planner.dataBase.items.Meal;
 import meal.planner.dataBase.items.Recipe;
 
@@ -103,16 +104,16 @@ public class MainPanel
 			if (box.getSelectedIndex() == 0) {
 				ArrayList<Recipe> recipes = dataPanel.getRecipes();
 				HashMap<Long, Double> ingIDAmountMap = new HashMap<>();
-				// for (Recipe r : recipes) {
-				// HashMap<Ingredient, Double> ings = r.get
-				// for (Ingredient i : ings.keySet()) {
-				// double amount = ingIDAmountMap.get(i.getId());
-				// amount += ings.get(i);
-				//
-				// ingIDAmountMap.put(i.getId(), amount);
-				//
-				// }
-				// }
+				for (Recipe r : recipes) {
+					HashMap<Ingredient, Double> ings = r.getHashIngs();
+					for (Ingredient i : ings.keySet()) {
+						double amount = ingIDAmountMap.get(i.getId());
+						amount += ings.get(i);
+
+						ingIDAmountMap.put(i.getId(), amount);
+
+					}
+				}
 
 				// writer.writePdf(dataPanel.ge, file);
 			} else {
@@ -125,6 +126,18 @@ public class MainPanel
 				}
 			}
 		}
+	}
+
+	public void refreshSuggestions() {
+		for (int i = 0; i < tabbedPane.getTabCount() - 1; i++) {
+			WebScrollPane sPane = (WebScrollPane) tabbedPane.getTabComponentAt(i);
+			DataPanel p = panelMapping.get(sPane);
+			if (p instanceof MealPanel) {
+				MealPanel panel = (MealPanel) p;
+				panel.refreshSuggestions();
+			}
+		}
+		// TODO: Refresh suggestions
 	}
 
 }

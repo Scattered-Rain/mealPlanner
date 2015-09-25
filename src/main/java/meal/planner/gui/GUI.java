@@ -168,6 +168,9 @@ public class GUI {
 			int result = WebOptionPane.showConfirmDialog(mainFrame, rPanel, "Title", WebOptionPane.OK_CANCEL_OPTION);
 			if (result == WebOptionPane.OK_OPTION) {
 				rPanel.save();
+
+				mainPanel.refreshSuggestions();
+				// TODO: Refresh recipe suggestions
 			}
 		});
 
