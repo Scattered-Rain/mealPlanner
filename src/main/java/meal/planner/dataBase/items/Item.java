@@ -52,6 +52,10 @@ public abstract class Item<S> {
 		this.description = description;
 	}
 	
+	public ArrayList<S> getSubs(){
+		return (ArrayList<S>)subItems.clone();
+	}
+	
 	/** Returns whether this Item contains the given SubItem */
 	public abstract boolean contains(S s);
 	
