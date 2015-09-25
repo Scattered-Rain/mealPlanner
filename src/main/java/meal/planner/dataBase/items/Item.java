@@ -65,6 +65,10 @@ public abstract class Item<S> {
 		}
 	}
 	
+	public void removeSub(int index){
+		subItems.remove(index);
+	}
+	
 	public ArrayList<S> getSubs(){
 		return (ArrayList<S>)subItems.clone();
 	}
