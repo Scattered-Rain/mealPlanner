@@ -26,4 +26,8 @@ public class Recipe extends Item<Ingredient>{
 		}
 		return price;
 	}
+
+	public void addIngredient(Ingredient ing, double amount) {
+		// TODO: FLO.... IMPLEMENT THIS!
+	}
 }

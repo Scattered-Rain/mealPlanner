@@ -4,18 +4,21 @@ import static meal.planner.GlobalConstants.ICON_MIN;
 import static meal.planner.GlobalConstants.ICON_PLUS;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.table.DefaultTableModel;
 
 import com.alee.laf.button.WebButton;
 import com.alee.laf.label.WebLabel;
 import com.alee.laf.panel.WebPanel;
 import com.alee.laf.scroll.WebScrollPane;
+import com.alee.laf.spinner.WebSpinner;
 import com.alee.laf.table.WebTable;
 
 import meal.planner.Main;
@@ -42,13 +45,13 @@ public class RecipePanel
 
 	private long id = -1;
 
-	private ArrayList<Ingredient> ingredients;
+	private HashMap<Ingredient, Double> ingredients;
 	WebTable ingredientTable;
 	JTextArea txtDesc;
 
 	public RecipePanel() {
 
-		ingredients = new ArrayList<>();
+		ingredients = new HashMap<>();
 		setLayout(new MigLayout("", "[][grow]", "[][grow,fill][grow][][]"));
 
 		txtDesc = new JTextArea();
@@ -68,7 +71,7 @@ public class RecipePanel
 		ingredientTable = new WebTable();
 		ingredientTable.setModel(new DefaultTableModel());
 		DefaultTableModel dtm = (DefaultTableModel) ingredientTable.getModel();
-		dtm.setColumnIdentifiers(new Object[] { "Ingredient Name" });
+		dtm.setColumnIdentifiers(new Object[] { "Ingredient Name", "Amount" });
 		JScrollPane scrollPane = new JScrollPane(ingredientTable);
 		add(scrollPane, "cell 1 3,grow,wmin 300, hmin 400");
 
@@ -89,6 +92,14 @@ public class RecipePanel
 
 		add(ingredient, "flowx,cell 1 4");
 
+		WebLabel lblAmnt = new WebLabel("Amount");
+		add(lblAmnt, "cell 1 4");
+
+		WebSpinner spnrAmnt = new WebSpinner();
+		spnrAmnt.setModel(new SpinnerNumberModel(0.0, 0.0, 999999, 1.0));
+
+		add(spnrAmnt, "cell 1 4");
+
 		button.addActionListener(e -> {
 			String text = ingredient.getText();
 			if (suggestions.contains(text)) {
@@ -97,17 +108,35 @@ public class RecipePanel
 
 				if (result.size() > 0) {
 					Ingredient i = result.get(0);
-					ingredients.add(i);
-					dtm.addRow(new Object[] { i.getName() });
+					ingredients.put(i, (Double) spnrAmnt.getValue());
+					dtm.addRow(new Object[] { i.getName(), spnrAmnt.getValue() });
 				}
 
 			}
 		});
 
-		WebButton button_1 = new WebButton(new ImageIcon(ICON_MIN));
-		add(button_1, "cell 1 3");
+		WebButton btnRemove = new WebButton(new ImageIcon(ICON_MIN));
+		add(btnRemove, "cell 1 3");
 		// TODO: Implement remove logic
+		btnRemove.addActionListener(e -> {
+			int selRow = ingredientTable.getSelectedRow();
+			if (selRow < 0)
+				return;
 
+			String name = (String) dtm.getValueAt(selRow, 0);
+			Double amount = (Double) dtm.getValueAt(selRow, 1);
+			Ingredient toRemove = null;
+			for (Ingredient i : ingredients.keySet()) {
+				if (i	.getName()
+						.equals(name)) {
+					if (ingredients.get(i) == amount)
+						toRemove = i;
+				}
+			}
+
+			ingredients.remove(toRemove);
+			dtm.removeRow(selRow);
+		});
 	}
 
 	@Override
@@ -125,9 +154,8 @@ public class RecipePanel
 
 		r.setName(textField.getText());
 		r.setDescription(txtDesc.getText());
-		for (Ingredient i : ingredients)
-			r	.getSubItems()
-				.add(i);
+		for (Ingredient i : ingredients.keySet())
+			r.addIngredient(i, ingredients.get(i));
 
 		return r;
 	}

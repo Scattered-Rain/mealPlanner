@@ -79,7 +79,10 @@ public class MealPanel
 		WebLabel lblValprice = new WebLabel("valPrice");
 		add(lblValprice, "cell 3 2");
 
-		recipeTable = new WebTable(new String[0][0], new String[] { "ID", "Name" });
+		recipeTable = new WebTable();
+		DefaultTableModel dtm = new DefaultTableModel();
+		dtm.setColumnIdentifiers(new String[] { "ID", "Name" });
+		recipeTable.setModel(dtm);
 		recipeTable.setEditable(false);
 		recipeTable.setColumnSelectionAllowed(false);
 		recipeTable.setRowSelectionAllowed(true);
@@ -104,6 +107,27 @@ public class MealPanel
 
 		JButton btnRemove = new JButton("Remove", new ImageIcon(ICON_MIN));
 		add(btnRemove, "cell 3 4");
+
+		btnRemove.addActionListener(e -> {
+			int selRow = recipeTable.getSelectedRow();
+
+			if (selRow < 0)
+				return;
+
+			String rName = (String) dtm.getValueAt(selRow, 1);
+
+			// Remove from recipes list
+			for (int i = 0; i < recipes.size(); i++) {
+				if (recipes	.get(i)
+							.getName()
+							.equals(rName)) {
+					recipes.remove(i);
+					break;
+				}
+			}
+
+			dtm.removeRow(selRow);
+		});
 
 		WebCollapsiblePane shoppingPane = new WebCollapsiblePane("Shopping List", new JLabel("Lorem ipsum BLABLABLA"));
 		shoppingPane.setExpanded(false);
