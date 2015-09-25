@@ -55,13 +55,13 @@ public class DataBase {
 	}
 	
 	/** Returns the Recipe with the specified Id */
-	public Recipe getRecipe(int id){
+	public Recipe getRecipe(long id){
 		assert isOk();
 		return recs.findId(id);
 	}
 	
 	/** Returns the Meal with the specified Id */
-	public Meal getMeal(int id){
+	public Meal getMeal(long id){
 		assert isOk();
 		return meals.findId(id);
 	}

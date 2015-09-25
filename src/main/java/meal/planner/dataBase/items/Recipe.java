@@ -36,6 +36,7 @@ public class Recipe extends Item<Ingredient>{
 	}
 	
 	/** Returns whether this Recipe contains the given ingredient */
+	@Override
 	public boolean contains(Ingredient ing){
 		assert isOk();
 		for(Ingredient i : subItems){

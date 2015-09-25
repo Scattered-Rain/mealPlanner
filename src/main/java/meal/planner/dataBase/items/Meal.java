@@ -1,14 +1,13 @@
 package meal.planner.dataBase.items;
 
-import java.util.ArrayList;
-
 public class Meal extends Item<Recipe>{
 	
-	public Meal(int id){
+	public Meal(long id) {
 		super(id);
 	}
 	
 	/** Returns whether this meal contains the given Recipe */
+	@Override
 	public boolean contains(Recipe rec){
 		assert isOk();
 		for(Recipe r : subItems){

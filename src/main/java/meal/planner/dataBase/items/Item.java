@@ -2,6 +2,8 @@ package meal.planner.dataBase.items;
 
 import java.util.ArrayList;
 
+import lombok.Getter;
+
 /** Abstract class that is the base for Ingredients, Meals and Recipes 
  * S here represents a Sub-Part, for example S=Ingredients for Recipes */
 public abstract class Item<S> {
@@ -13,6 +15,7 @@ public abstract class Item<S> {
 	/** The Description of this item */
 	private String description;
 	/** The list of sub items this item contains */
+	@Getter
 	protected ArrayList<S> subItems;
 	
 	
@@ -36,7 +39,7 @@ public abstract class Item<S> {
 	
 	
 	/** Construct new Item */
-	public Item(int id){
+	public Item(long id) {
 		this.id = id;
 		this.name = "";
 		this.description = "";
@@ -111,7 +114,7 @@ public abstract class Item<S> {
 	public abstract boolean contains(S s);
 	
 	/** Returns the price of this item, as scaled to one person */
-	public abstract float getPrice();
+	public abstract double getPrice();
 	
 	public boolean equals(Object item){
 		assert isOk();

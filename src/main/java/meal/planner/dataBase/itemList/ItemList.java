@@ -108,7 +108,7 @@ public class ItemList<T extends Item, S> {
 		assert isOk();
 		ArrayList<T> output = new ArrayList<T>();
 		for(T t : items){
-			float price = t.getPrice();
+			double price = t.getPrice();
 			if((price>=minPrice || minPrice<0) && (price<=maxPrice || maxPrice<0)){
 				output.add(t);
 			}
