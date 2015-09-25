@@ -1,12 +1,17 @@
 package meal.planner.gui.panels;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 
+import com.alee.laf.filechooser.WebFileChooser;
 import com.alee.laf.panel.WebPanel;
 import com.alee.laf.scroll.WebScrollPane;
 import com.alee.laf.tabbedpane.WebTabbedPane;
+import com.itextpdf.text.DocumentException;
 
 import meal.planner.Main;
+import meal.planner.dataBase.PdfDataWriter;
 import meal.planner.dataBase.items.Meal;
 
 /**
@@ -60,8 +65,7 @@ public class MainPanel
 			tabbedPane.add(meal.getName(), sPane);
 			panelMapping.put(sPane, mealPanel);
 		}
-		// Add extra functionality
-		tabbedPane.getTabComponentAt(tabbedPane.getTabCount() - 1);
+
 
 		if (select)
 			tabbedPane.setSelectedIndex(tabbedPane.getTabCount() - 1);
@@ -76,8 +80,15 @@ public class MainPanel
 	}
 
 	public void exportPDF() {
-		throw new UnsupportedOperationException();
-		// TODO: Implement this
+		File loc = WebFileChooser.showSaveDialog();
+		PdfDataWriter writer = new PdfDataWriter();
+		 Meal meal = ((MealPanel)panelMapping.get(tabbedPane.getSelectedComponent())).save();
+		 try {
+			writer.writePdf(meal, loc);
+		} catch (DocumentException | IOException e) {
+			e.printStackTrace();
+		}
+		// TODO: Export shopping list
 	}
 
 }

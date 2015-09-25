@@ -122,7 +122,6 @@ public class GUI {
 		exportPDFButton.setToolTipText("Export As PDF...");
 		ingredientButton.setToolTipText("Add new ingredient to database...");
 
-		// TODO: Button listeners
 		newButton.addActionListener(e -> mainPanel.addTab(null, true));
 
 		openButton.addActionListener(e -> {
