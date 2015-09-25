@@ -15,80 +15,97 @@ public class ItemList<T extends Item, S> {
 	/** Constructs new ItemList */
 	public ItemList(){
 		this.items = new ArrayList<T>();
+		assert isOk();
 	}
 	
 	/** Adds A new Item to the list */
 	public void add(T item){
+		assert isOk();
 		items.add(item);
 		item.setId(highestAvailableId);
 		this.highestAvailableId++;
+		assert isOk();
 	}
 	
 	/** Removes item within this list of the given id */
 	public void remove(int id){
+		assert isOk();
 		for(int c=0; c<items.size(); c++){
 			T t = items.get(c);
 			if(t.getId()==id){
 				items.remove(c);
+				assert isOk();
 				return;
 			}
 		}
+		assert isOk();
 	}
 	
 	/** Returns a list containing all the items that as a substring have the given name */
 	public ArrayList<T> findName(String name){
+		assert isOk();
 		return findName(name, items);
 	}
 	
 	/** Returns a list containing all the items that as a substring have the given name */
 	private ArrayList<T> findName(String name, ArrayList<T> items){
+		assert isOk();
 		ArrayList<T> output = new ArrayList<T>();
 		for(T t : items){
 			if(t.getName().equals(name)){
 				output.add(t);
 			}
 		}
+		assert isOk();
 		return output;
 	}
 	
 	/** Returns the item with the given id */
-	public T findId(long id) {
+	public T findId(int id){
+		assert isOk();
 		return findId(id, items);
 	}
 	
 	/** Returns the item with the given id */
-	private T findId(long id, ArrayList<T> items) {
+	private T findId(int id, ArrayList<T> items){
+		assert isOk();
 		for(T t : items){
 			if(t.getId()==id){
 				return t;
 			}
 		}
+		assert isOk();
 		return null;
 	}
 	
 	/** Returns a list containing all the items that as a sub component have the given component */
 	public ArrayList<T> findPart(S part){
+		assert isOk();
 		return findPart(part, items);
 	}
 	
 	/** Returns a list containing all the items that as a sub component have the given component */
 	public ArrayList<T> findPart(S part, ArrayList<T> items){
+		assert isOk();
 		ArrayList<T> output = new ArrayList<T>();
 		for(T t : items){
 			if(t.contains(part)){
 				output.add(t);
 			}
 		}
+		assert isOk();
 		return output;
 	}
 	
 	/** Returns a list containing all the items that have a price between min and max price (-1 will be evaluated as no cap in this direction)*/
 	public ArrayList<T> findPrice(float minPrice, float maxPrice){
+		assert isOk();
 		return findPrice(minPrice, maxPrice, items);
 	}
 	
 	/** Returns a list containing all the items that have a price between min and max price (-1 will be evaluated as no cap in this direction)*/
-	public ArrayList<T> findPrice(double minPrice, double maxPrice, ArrayList<T> items) {
+	public ArrayList<T> findPrice(float minPrice, float maxPrice, ArrayList<T> items){
+		assert isOk();
 		ArrayList<T> output = new ArrayList<T>();
 		for(T t : items){
 			double price = t.getPrice();
@@ -96,11 +113,13 @@ public class ItemList<T extends Item, S> {
 				output.add(t);
 			}
 		}
+		assert isOk();
 		return output;
 	}
 	
 	/** Finds All items that meet all the given requirements, given null or -1 will be evaluated to not matter for the search */
-	public ArrayList<T> findAll(String name, double minPrice, double maxPrice, S... parts) {
+	public ArrayList<T> findAll(String name, float minPrice, float maxPrice, S ... parts){
+		assert isOk();
 		ArrayList<T> output = items;
 		if(name!=null){
 			output = findName(name, output);
@@ -111,16 +130,19 @@ public class ItemList<T extends Item, S> {
 			}
 		}
 		output = findPrice(minPrice, maxPrice, output);
+		assert isOk();
 		return output;
 	}
 	
 	/** Returns a list of all items sorted according to id */
 	public ArrayList<T> getAll(){
+		assert isOk();
 		return (ArrayList<T>)items.clone();
 	}
 	
 	/** Returns a list of all items sorted according to name */
 	public ArrayList<T> getAllSortedByName(){
+		assert isOk();
 		ArrayList<T> output = (ArrayList<T>)items.clone();
 		for(int c=0; c<output.size(); c++){
 			for(int c2=c+1; c2<output.size(); c2++){
@@ -131,7 +153,21 @@ public class ItemList<T extends Item, S> {
 				}
 			}
 		}
+		assert isOk();
 		return output;
+	}
+	
+	/** Assertion Method */
+	protected boolean isOk(){
+		if(items==null){
+			return false;
+		}
+		for(Item i : items){
+			if(i==null || i.getId()>=highestAvailableId){
+				return false;
+			}
+		}
+		return true;
 	}
 	
 }

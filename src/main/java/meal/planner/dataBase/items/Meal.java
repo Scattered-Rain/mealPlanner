@@ -9,21 +9,24 @@ public class Meal extends Item<Recipe>{
 	/** Returns whether this meal contains the given Recipe */
 	@Override
 	public boolean contains(Recipe rec){
+		assert isOk();
 		for(Recipe r : subItems){
 			if(r.getId()==rec.getId()){
 				return true;
 			}
 		}
+		assert isOk();
 		return false;
 	}
 	
 	/** Returns the price of the entre meal */
-	@Override
-	public double getPrice() {
+	public float getPrice(){
+		assert isOk();
 		float price = 0;
 		for(Recipe r : subItems){
 			price += r.getPrice();
 		}
+		assert isOk();
 		return price;
 	}
 	
