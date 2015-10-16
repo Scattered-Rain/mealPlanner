@@ -34,13 +34,13 @@ public class Ingredient extends Item<IngAttribute>{
 	}
 	
 	/** Returns the price of this ingredient */
-	public float getPrice(){
+	public double getPrice(){
 		assert isOk();
 		return price;
 	}
 	
 	/** Sets the price of the current Ingredient */
-	public void setPrice(float price){
+	public void setPrice(double price){
 		assert isOk();
 		this.price = price;
 	}

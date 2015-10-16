@@ -61,13 +61,13 @@ public class ItemList<T extends Item, S> {
 	}
 	
 	/** Returns the item with the given id */
-	public T findId(int id){
+	public T findId(long id){
 		assert isOk();
 		return findId(id, items);
 	}
 	
 	/** Returns the item with the given id */
-	private T findId(int id, ArrayList<T> items){
+	private T findId(long id, ArrayList<T> items){
 		assert isOk();
 		for(T t : items){
 			if(t.getId()==id){
@@ -109,7 +109,7 @@ public class ItemList<T extends Item, S> {
 		ArrayList<T> output = new ArrayList<T>();
 		for(T t : items){
 			double price = t.getPrice();
-			if((price>=minPrice || minPrice==-1) && (price<=maxPrice || maxPrice==-1)){
+			if((price>=minPrice || minPrice<0) && (price<=maxPrice || maxPrice<0)){
 				output.add(t);
 			}
 		}
