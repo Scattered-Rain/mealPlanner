@@ -4,9 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 import meal.planner.dataBase.itemList.ItemList;
-import meal.planner.dataBase.items.Ingredient;
-import meal.planner.dataBase.items.Meal;
-import meal.planner.dataBase.items.Recipe;
+import meal.planner.dataBase.items.*;
 
 /** This class serves as the central storage and access unit */
 public class DataBase {
@@ -49,7 +47,7 @@ public class DataBase {
 	}
 	
 	/** Returns the Ingredient with the specified Id */
-	public Ingredient getIngredient(int id){
+	public Ingredient getIngredient(long id) {
 		assert isOk();
 		return ings.findId(id);
 	}
